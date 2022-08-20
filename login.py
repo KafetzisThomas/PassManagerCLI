@@ -1,7 +1,12 @@
 import hashlib
+import colorama
+from colorama import Fore
+colorama.init(autoreset=True)
 
 def sign_up():
-    print("\n********** Sign Up **********")
+    print(f"""{Fore.LIGHTYELLOW_EX}
+********** Sign Up **********{Fore.GREEN}
+*Enter a new username and a new password.\n""")
     username = input("Enter Username: ")
     password = input("Enter Password: ")
     confirm_password = input("Confirm Password: ")
@@ -13,12 +18,14 @@ def sign_up():
              f.write(username + "\n")
              f.write(hash)
         f.close()
-        print("You have registered successfully!")
+        print(f"{Fore.GREEN}You have registered successfully!")
     else:
-        print("The password is not the same as above!\n")
+        print(f"{Fore.RED}The password is not the same as above!")
 
 def sign_in():
-    print("\n********** Login System **********")
+    print(f"""{Fore.LIGHTYELLOW_EX}
+********** Sign In **********{Fore.GREEN}
+*Log in with your current username and password.\n""")
     username = input("Enter Username: ")
     password = input("Enter Password: ")
     authenticate = password.encode()
@@ -28,7 +35,7 @@ def sign_in():
         stored_username, stored_password = f.read().split("\n")
     f.close()
     if username == stored_username and authenticate_hash == stored_password:
-         print("Logged in Successfully!")
+         print(f"Logged in as: {Fore.GREEN}{username}")
     else:
-         print("Login failed!\n")
+         print(f"{Fore.RED}Login failed!\nTry Again.")
          sign_in()

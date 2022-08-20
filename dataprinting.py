@@ -1,5 +1,8 @@
 import sqlite3
 import decrypt
+import colorama
+from colorama import Fore
+colorama.init(autoreset=True)
 
 def print_data():
     connection = sqlite3.connect("data.db")
@@ -7,10 +10,9 @@ def print_data():
     cursor.execute("SELECT * FROM VAULT")
     rows = cursor.fetchall()
     for row in rows:
-        print("--------------------------\n")
+        print(f"{Fore.LIGHTYELLOW_EX}--------------------------")
         for cell in row:
             print(decrypt.Decrypt(cell))   
     
-    print("\n* Your critical information are safe and protected!")
     connection.commit()
     connection.close()
