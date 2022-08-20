@@ -84,7 +84,7 @@ __You need to overwrite the default __username__ and __password__ using the 'Sig
 
 ## Author
 
-- __Thomas Kafetzis (Github: KafetzisThomas)__
+- __KafetzisThomas__
 
 ## Bug Reports
 
