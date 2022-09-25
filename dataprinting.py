@@ -1,18 +1,24 @@
-import sqlite3
-import decrypt
-import colorama
+import os, sqlite3, decrypt, colorama
 from colorama import Fore
 colorama.init(autoreset=True)
 
+# Printing out decrypted information from the database table inside the software 
+# Encrypted data -> Decrypted data -> Printing out the data
 def print_data():
-    connection = sqlite3.connect("data.db")
-    cursor = connection.cursor()
-    cursor.execute("SELECT * FROM VAULT")
-    rows = cursor.fetchall()
-    for row in rows:
-        print(f"{Fore.LIGHTYELLOW_EX}--------------------------")
-        for cell in row:
-            print(decrypt.Decrypt(cell))   
-    
-    connection.commit()
-    connection.close()
+    try:
+        connection = sqlite3.connect("data.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM VAULT")
+        rows = cursor.fetchall()
+        for row in rows:
+            print(f"{Fore.LIGHTYELLOW_EX}--------------------------")
+            for cell in row:
+                print(decrypt.Decrypt(cell))
+        
+        print(f"{Fore.RED}\n*Your critical information are safe and protected!")
+        connection.commit()
+        connection.close()
+    except sqlite3.OperationalError as err:
+        print(f"{Fore.RED}{err}")
+        connection.close()
+        os.remove("data.db")
