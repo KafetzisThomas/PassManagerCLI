@@ -1,6 +1,6 @@
-import sqlite3
-import encrypt 
+import sqlite3, encrypt
 
+# Importing encrypted data into the database
 def enter_data(username,password,email,url):
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()

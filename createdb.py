@@ -1,5 +1,6 @@
 import sqlite3
 
+# Creating the database table (VAULT)
 def create_database():
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
