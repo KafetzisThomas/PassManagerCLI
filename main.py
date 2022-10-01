@@ -91,13 +91,13 @@ def menu():
                 while(exit==1):
                     # Getting input from the user before storing information inside the database table (VAULT)
                     time.sleep(0.10)
+                    name = input("Name: ")
+                    time.sleep(0.10)
                     username = input("Username: ")
                     time.sleep(0.10)
-                    email = input("Email: ")
+                    website = input("Website: ")
                     time.sleep(0.10)
-                    url = input("Url: ")
-                    time.sleep(0.10)
-                    dataentry.enter_data("Username: " + Fore.GREEN + username,"Password: " + Fore.GREEN + password,"Email: " + Fore.GREEN + email,"Url: " + Fore.GREEN + url)
+                    dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}")
                     # Option to continue/stop entring data
                     exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
                     time.sleep(0.10)

@@ -1,14 +1,14 @@
 import sqlite3
 
-# Creating the database table (VAULT)
+# Creating the database (data.db)
 def create_database():
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
     table = """CREATE TABLE VAULT(
-            username VARCHAR(10000) PRIMARY KEY,
+            name VARCHAR(10000) PRIMARY KEY,
+            username VARCHAR(10),
             password VARCHAR(5),
-            email VARCHAR(5),
-            url VARCHAR(10));"""
+            website VARCHAR(10));"""
     
     cursor.execute(table)
     connection.commit()

@@ -1,18 +1,18 @@
 import sqlite3, encrypt
 
 # Importing encrypted data into the database
-def enter_data(username,password,email,url):
+def enter_data(name,username,password,website):
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
-    table = """INSERT INTO VAULT(username,password,email,url)
+    table = """INSERT INTO VAULT(name,username,password,website)
             VALUES (?,?,?,?);"""
     
+    name = encrypt.Encrypt(name)
     username = encrypt.Encrypt(username)
     password = encrypt.Encrypt(password)
-    email = encrypt.Encrypt(email)
-    url = encrypt.Encrypt(url)
+    website = encrypt.Encrypt(website)
 
-    combination = (username,password,email,url)
+    combination = (name,username,password,website)
     cursor.execute(table,combination)
     connection.commit()
     connection.close()
