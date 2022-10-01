@@ -1,9 +1,13 @@
 from os import path
-import time, string, random
+import os, time, string, random
 import createdb, generateKey, dataentry, dataprinting, login
 import colorama
 from colorama import Fore
 colorama.init(autoreset=True)
+
+# Updating required packages from 'requirements.txt' file
+os.system("pip install --upgrade -r requirements.txt")
+os.system("cls")
 
 print(f"""{Fore.LIGHTYELLOW_EX}
 ====================== Pass_Manager ======================={Fore.RESET}
