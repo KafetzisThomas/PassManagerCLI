@@ -1,13 +1,52 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#######################################################################################################
+########################################### Pass_Manager ##############################################
+#######################################################################################################
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+###
+### Function: Allows you to store your critical passwords including usernames, emails and websites (URLs) of your online accounts.
+###
+### NOTES:    1. For security reasons, you'll need to overwrite the default username and password using the 'Sign Up' form
+###                                    that it is included in the software.		    	                     
+###				            >>> See the Readme for instructions on this.
+###
+###           2. Required Third-Party Packages: [colorama],[cryptography]
+###                         >>> See the Readme for instructions on how to install them.
+###
+###           3. I am a completelly amateur at programming so if something doesn't work I'll try to fix it but might not
+###                even know how, so don't expect too much.
+###
+### Author:   KafetzisThomas
+###
+### GitHub:   https://github.com/KafetzisThomas/Pass_Manager
+###
+### License:  GPL-3.0
+###
+### IMPORTANT:  I OFFER NO WARRANTY OR GUARANTEE FOR THIS SCRIPT. USE AT YOUR OWN RISK.
+###             I tested it on my own and implemented some failsafes as best as I could,
+###             but there could always be some kind of bug. You should inspect the code yourself.
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+print("Importing Standard Libraries...")
+# Importing standard libraries
 from os import path
-import os, time, string, random
+import os, sys, time, string, random
+print("Importing Script Modules...")
+# Importing module files
 import createdb, generateKey, dataentry, dataprinting, login
+print("Importing Third-Party Modules...")
+# Importing other (third-party) libraries
 import colorama
 from colorama import Fore
 colorama.init(autoreset=True)
 
-# Updating required packages from 'requirements.txt' file
+print("Checking for available package updates...")
+# Updating required packages to the latest versions if exist
 os.system("pip install --upgrade -r requirements.txt")
 os.system("cls")
+
+###################################### MAIN ##############################################
 
 print(f"""{Fore.LIGHTYELLOW_EX}
 ====================== Pass_Manager ======================={Fore.RESET}
@@ -39,7 +78,7 @@ def access():
             time.sleep(0.10)
         elif(choice==3):
             print(f"{Fore.RED}Program closed.") 
-            exit()
+            sys.exit()
         else:
             print(f"{Fore.RED}Undefined choice.")
             access()
@@ -48,7 +87,7 @@ def access():
         access()
     except KeyboardInterrupt:
         print(f"\n{Fore.RED}Program closed.")
-        exit()
+        sys.exit()
 access()
 
 def menu():
@@ -65,7 +104,7 @@ def menu():
         time.sleep(0.10)
     except KeyboardInterrupt:
         print(f"\n{Fore.RED}Program closed.")
-        exit()
+        sys.exit()
     
     # Generating a secure password
     if(option=="1"):
@@ -139,7 +178,7 @@ def menu():
 
     if(option=="3"):
         print(f"{Fore.RED}Program closed.")
-        exit()
+        sys.exit()
     else:
         print(f"{Fore.RED}Undefined choice.")
         time.sleep(0.10)

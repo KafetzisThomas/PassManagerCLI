@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
 from cryptography.fernet import Fernet
 
 # Loading the universal key for authentication in process of data reading/encryption
