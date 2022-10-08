@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-import os, sqlite3, decrypt, colorama
+import os, sqlite3, Scripts.decrypt as decrypt, colorama
 from colorama import Fore
 colorama.init(autoreset=True)
 

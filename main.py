@@ -34,7 +34,11 @@ from os import path
 import os, sys, time, string, random
 print("Importing Script Modules...")
 # Importing module files
-import createdb, generateKey, dataentry, dataprinting, login
+import Scripts.createdb as createdb
+import Scripts.generateKey as generateKey
+import Scripts.dataentry as dataentry
+import Scripts.dataprinting as dataprinting
+import Scripts.login as login
 print("Importing Third-Party Modules...")
 # Importing other (third-party) libraries
 import colorama

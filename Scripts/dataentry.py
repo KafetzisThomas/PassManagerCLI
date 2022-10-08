@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-import sqlite3, encrypt
+import sqlite3, Scripts.encrypt as encrypt
 
 # Importing encrypted data into the database
 def enter_data(name,username,password,website):
