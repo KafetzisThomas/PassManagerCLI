@@ -1,91 +1,51 @@
-# Pass_Manager
+<h1 align="center">Pass_Manager</h1>
 
-__A Password Manager created with Python for saving your critical login information. It is very lightful and easy to use,
-designed for the best hardware performance.__
+__What Is This?__ - Allows you to store your critical passwords including usernames, emails and websites (URLs) of your online accounts.
 
-## Getting Started
+__How to Download:__ Click [here](https://github.com/KafetzisThomas/Pass_Manager/archive/refs/heads/main.zip) to download.
 
-### With this software you can...
-
-1. Store your critical passwords including usernames, emails and urls of your favourite login forms!
-================================================================
-2. Generate safe passwords for your future online accounts!
-================================================================
-3. See your vault inside a terminal (CLI) menu!
-================================================================
-
-## Built With
-
-- [Cryptography 37.0.2](https://pypi.org/project/cryptography/) for vault encryption (a safe and updated module of python that does the work done).
-* Database File -> data.db
-
-----------------------------------------------------------------------------------------------------------------------------------
-
-- [Hashlib](https://pypi.org/project/hashlib/) for the login system protection, specifically it comes with sha256 type of encryption. 
-* The login information are stored in 'credentials.txt' file.
-
-----------------------------------------------------------------------------------------------------------------------------------
-
-## Installation
-
-### - How to Download:
-
--  __Download Automatically__:  Click the [download](https://github.com/KafetzisThomas/Pass_Manager/archive/refs/heads/main.zip) link on the right.
-
------------------------------------------------------------------------------------------------------------------------------------
-
--  __Download Manually__: Open the terminal on your machine and type the following command:
-
+__Download Manually__: Open the terminal on your machine and type the following command:
 ```
 git clone https://github.com/KafetzisThomas/Pass_Manager.git
 ```
 
------------------------------------------------------------------------------------------------------------------------------------
-
-- Use the package manager [pip](https://pip.pypa.io/en/stable) to install the requirements.txt from your terminal!
-
+Use [pip](https://pip.pypa.io/en/stable) to install the required packages:
 ```
 pip install -r requirements.txt
 ```
+___Make note that after installing the required packages, the software will be checking for package updates at every startup.___
 
-## Usage
+## Built With
 
-The only thing you have to do is to run the '__main.py__' file in your terminal and all thats it!
+- [Cryptography](https://pypi.org/project/cryptography/) for vault encryption (a safe and constantly updated package that does the work done).
+- [Hashlib](https://pypi.org/project/hashlib/) for the login system protection, specifically it comes with sha256 type of encryption. 
+
+## Usage Notes - READ THIS
+
+As a user, the only thing you have to do is to run the ```Pass_Manager.py``` file in your terminal and that's it!
 
 __Windows:__
-``` python main.py ```
+``` python Pass_Manager.py ```
 __Mac/Linux:__
-``` ./main.py ```
-* __For Mac/Linux:__ Make sure you made it executable with the following command:
+``` ./Pass_Manager.py ```
+* __For Mac/Linux:__ Make sure you make it executable with the following command:
 ```
-chmod +x main.py
+chmod +x Pass_Manager.py
 ```
 
 ## For Security Reasons
 
 __You need to overwrite the default __username__ and __password__ using the 'Sign Up' form that it is included in the software.__
 
-* Default Username > __user__
-* Default Password > __pass__
+* Default Username -> __user__
+* Default Password -> __pass__
 
 ## Files Explained
 
-- 'createdb.py' file is for the database creation (File -> data.db). 
-  There will be your usernames, passwords, emails, urls of your accounts in an encrypted format.
-- 'encrypt.py' file is for the process of encryption is needed to the database table, so nobody can access your information without the login credentials.
-- 'decrypt.py' file is for the process of decryption is needed to the database table, so you can see your passwords inside the software.
-- 'generateKey.py' creates automatically a file including your unique universal key of entering your login information, without this you cannot enter into your vault.
-- 'login.py' is for the login form that appears at the startup of the software.
-  **This also reads the 'generateKey.py' file to match the details from the user.
-- 'dataprinting.py' is for the printing decryption information from the database table inside the software. 
-  **This also reads the 'decrypt.py' file in condition to decrypt the data. (encrypted data -> decrypted data -> print decrypted data)
-- 'dataentry.py' is for the encrypted data importation to the database table.
-- 'credentials.txt' is for saving the username and password (encrypted) to be readable in 'login.py' file.
-
-## Author
-
-- __KafetzisThomas__
-
-## Bug Reports
-
-**If you find any bugs in the code, do not hesitate to make a pull request! 🤓**
+- ```createdb.py``` file is for the database creation (File -> ```data.db```). There, will be your saved usernames, passwords, websites (URLs) of your accounts in an encrypted format.
+- ```encrypt.py``` file is for the process of encryption is needed to the database table, so nobody can access your information without the login credentials.
+- ```decrypt.py``` file is for the process of decryption is needed to the database table, so you can see your passwords inside the software.
+- ```generateKey.py``` creates automatically a file including your unique universal key, without this you cannot enter into your vault.
+- ```login.py``` is for the login form that appears at the startup of the software. This also reads the ```generateKey.py``` file to match the details from the user.
+- ```dataprinting.py``` is to print the data from the database table as decrypted inside the software. This also reads the ```decrypt.py``` file in condition to decrypt the data. (encrypted data -> decrypted data -> print decrypted data)
+- ```dataentry.py``` is for the encrypted data importation to the database table.
