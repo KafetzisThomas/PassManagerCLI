@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-import hashlib, colorama
+import hashlib, colorama, getpass
 from colorama import Fore
 colorama.init(autoreset=True)
 
@@ -8,11 +8,13 @@ colorama.init(autoreset=True)
 def sign_up():
     print(f"""{Fore.LIGHTYELLOW_EX}
 ********** Sign Up **********{Fore.GREEN}
-*Enter a new username and a new password.\n""")
+*Enter a new username and a new password.
+*Note that your typing is hidden.\n""")
     # Asking the user for a username and a password
-    username = input("Enter Username: ")
-    password = input("Enter Password: ")
-    confirm_password = input("Confirm Password: ")
+    # Get a hidden password input
+    username = getpass.getpass("Enter Username: ")
+    password = getpass.getpass("Enter Password: ")
+    confirm_password = getpass.getpass("Confirm Password: ")
     # If this condition is True then the password will be encrypted
     if(confirm_password==password):
         encode = confirm_password.encode()
@@ -31,10 +33,12 @@ def sign_up():
 def sign_in():
     print(f"""{Fore.LIGHTYELLOW_EX}
 ********** Sign In **********{Fore.GREEN}
-*Log in with your current username and password.\n""")
+*Log in with your current username and password.
+*Note that your typing is hidden.\n""")
     # Asking the user for the existing username and password
-    username = input("Enter Username: ")
-    password = input("Enter Password: ")
+    # Get a hidden password input
+    username = getpass.getpass("Enter Username: ")
+    password = getpass.getpass("Enter Password: ")
     # User input hashing for authentication
     authenticate = password.encode()
     authenticate_hash = hashlib.md5(authenticate).hexdigest()
