@@ -29,7 +29,7 @@
 print("Importing Standard Libraries...")
 # Importing standard libraries
 from os import path
-import os, sys, time, string, random
+import os, sys, time, string, random, platform
 print("Importing Script Modules...")
 # Importing module files
 import Scripts.createdb as createdb
@@ -46,7 +46,11 @@ colorama.init(autoreset=True)
 print("Checking for available package updates...")
 # Updating required packages to the latest versions if exist
 os.system("pip install --upgrade -r requirements.txt")
-os.system("cls")
+
+# Checks system platform to set correct console clear command
+# Clears console
+clear_command = "cls" if platform.system() == "Windows" else "clear"
+os.system(clear_command)
 
 # Run check on python version, must be 3.6 or higher because of f strings
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
