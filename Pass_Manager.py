@@ -152,8 +152,10 @@ def menu():
                     time.sleep(0.10)
                     website = input("Website: ")
                     time.sleep(0.10)
+                    note = input("\nNote: ")
+                    time.sleep(0.10)
                     if(name and username and website) != '':
-                        dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}")
+                        dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}",f"\nNote: {Fore.GREEN}{note}")
                         # Option to continue/stop entring data
                         exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
                         time.sleep(0.10)

@@ -10,7 +10,8 @@ def create_database():
             name VARCHAR(10000) PRIMARY KEY,
             username VARCHAR(10),
             password VARCHAR(5),
-            website VARCHAR(10));"""
+            website VARCHAR(10),
+            note VARCHAR(5));"""
     
     cursor.execute(table)
     connection.commit()
