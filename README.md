@@ -40,6 +40,10 @@ __You need to overwrite the default __username__ and __password__ using the 'Sig
 * Default Username -> __user__
 * Default Password -> __pass__
 
+## IMPORTANT
+
+I am a total amateur at programming so if something doesn't work I'll try to fix it but might not even know how, so don't expect too much. __I OFFER NO WARRANTY OR GUARANTEE FOR THIS SCRIPT. USE AT YOUR OWN RISK.__ I tested it on my own and implemented some failsafes as best as I could, but there could always be some kind of bug. You should inspect the code yourself.
+
 ## Files Explained
 
 - ```createdb.py``` file is for the database creation (File -> ```data.db```). There, will be your saved usernames, passwords, websites (URLs) of your accounts in an encrypted format.
