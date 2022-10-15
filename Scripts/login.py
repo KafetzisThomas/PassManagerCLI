@@ -15,8 +15,9 @@ def sign_up():
     username = getpass.getpass("Enter Username: ")
     password = getpass.getpass("Enter Password: ")
     confirm_password = getpass.getpass("Confirm Password: ")
+    # Checking if fields are filled
     # If this condition is True then the password will be encrypted
-    if(confirm_password==password):
+    if(username and password and confirm_password) != '' and (confirm_password==password):
         encode = confirm_password.encode()
         hash = hashlib.md5(encode).hexdigest()
 
@@ -27,7 +28,8 @@ def sign_up():
         f.close()
         print(f"{Fore.GREEN}You have registered successfully!")
     else:
-        print(f"{Fore.RED}The password is not the same as above!")
+        print(f"{Fore.RED}The password is not the same as above or you did not fill all the fields.")
+        sign_up()
 
 # Signing in with the existing credentials information
 def sign_in():
@@ -39,17 +41,22 @@ def sign_in():
     # Get a hidden password input
     username = getpass.getpass("Enter Username: ")
     password = getpass.getpass("Enter Password: ")
-    # User input hashing for authentication
-    authenticate = password.encode()
-    authenticate_hash = hashlib.md5(authenticate).hexdigest()
+    # Checking if fields are filled
+    if(username and password) != '':
+        # User input hashing for authentication
+        authenticate = password.encode()
+        authenticate_hash = hashlib.md5(authenticate).hexdigest()
 
-    # Reading the existing username and password from the 'credentials.txt' file
-    with open("credentials.txt", "r") as f:
-        stored_username, stored_password = f.read().split("\n")
-    f.close()
-    # Checking if user input credentials are the same as the saved ones
-    if (username==stored_username) and (authenticate_hash==stored_password):
-         print(f"Logged in as: {Fore.GREEN}{username}")
+        # Reading the existing username and password from the 'credentials.txt' file
+        with open("credentials.txt", "r") as f:
+            stored_username, stored_password = f.read().split("\n")
+        f.close()
+        # Checking if user input credentials are the same as the saved ones
+        if(username==stored_username) and (authenticate_hash==stored_password):
+            print(f"Logged in as: {Fore.GREEN}{username}")
+        else:
+            print(f"{Fore.RED}Login failed!\nTry Again.")
+            sign_in()
     else:
-         print(f"{Fore.RED}Login failed!\nTry Again.")
-         sign_in()
+        print(f"{Fore.RED}You did not fill all the fields.")
+        sign_in()
