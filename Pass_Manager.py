@@ -104,11 +104,11 @@ access()
 
 def menu():
     print(f"""{Fore.LIGHTYELLOW_EX}
----------- Menu------------{Fore.RESET}
+---------- Menu ------------{Fore.RESET}
 1.Generate/Save Password
 2.View Saved Passwords
 3.Exit{Fore.LIGHTYELLOW_EX}
----------------------------
+----------------------------
 """)
     
     try:
@@ -146,17 +146,20 @@ def menu():
                 while(exit==1):
                     # Getting input from the user before storing information inside the database table (VAULT)
                     time.sleep(0.10)
-                    name = input("Name: ")
+                    name = input("\nName: ")
                     time.sleep(0.10)
                     username = input("Username: ")
                     time.sleep(0.10)
                     website = input("Website: ")
                     time.sleep(0.10)
-                    dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}")
-                    # Option to continue/stop entring data
-                    exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
-                    time.sleep(0.10)
-                    print(f"\n{Fore.RED}*Information stored successfully into your vault!")
+                    if(name and username and website) != '':
+                        dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}")
+                        # Option to continue/stop entring data
+                        exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
+                        time.sleep(0.10)
+                        print(f"{Fore.RED}*Information stored successfully into your vault!")
+                    else:
+                        print(f"{Fore.RED}You did not fill all the fields.")
                 else:
                     time.sleep(0.10)
             except ValueError as err:
@@ -173,6 +176,7 @@ def menu():
             main()
             menu()
         elif(save.lower()=="n"):
+            print(f"{Fore.RED}Operation cancelled.")
             time.sleep(0.10)
             menu()
         else:
