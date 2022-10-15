@@ -15,14 +15,12 @@
 ###           2. Required Third-Party Packages: [colorama],[cryptography]
 ###                         >>> See the Readme for instructions on how to install them.
 ###
-###           3. I am a completelly amateur at programming so if something doesn't work I'll try to fix it but might not
+###           3. I am a total amateur at programming so if something doesn't work I'll try to fix it but might not
 ###                even know how, so don't expect too much.
 ###
 ### Author:   KafetzisThomas
 ###
 ### GitHub:   https://github.com/KafetzisThomas/Pass_Manager
-###
-### License:  GPL-3.0
 ###
 ### IMPORTANT:  I OFFER NO WARRANTY OR GUARANTEE FOR THIS SCRIPT. USE AT YOUR OWN RISK.
 ###             I tested it on my own and implemented some failsafes as best as I could,
