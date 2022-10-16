@@ -22,7 +22,7 @@ ___Make note that after installing the required packages, the software will be c
 
 ## Usage Notes - READ THIS
 
-As a user, the only thing you have to do is to run the ```Pass_Manager.py``` file in your terminal and that's it!
+To use this script, run the ```Pass_Manager.py``` file in your terminal and that's it!
 
 __Windows:__
 ``` python Pass_Manager.py ```
