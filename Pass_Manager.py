@@ -66,11 +66,11 @@ print(f"""{Fore.LIGHTYELLOW_EX}
 ================= Author: KafetzisThomas ==================
 -----------------------------------------------------------
 {Fore.LIGHTYELLOW_EX}
-<< Login >>{Fore.RESET}
+- Login -{Fore.RESET}
 1.Sign Up
 2.Sign In
 3.Exit{Fore.LIGHTYELLOW_EX}
------------
+---------
 """)
 
 # Login form
@@ -104,11 +104,11 @@ access()
 
 def menu():
     print(f"""{Fore.LIGHTYELLOW_EX}
----------- Menu ------------{Fore.RESET}
-1.Generate/Save Password
-2.View Saved Passwords
+--- Menu ---{Fore.RESET}
+1.Add Item
+2.View Vault
 3.Exit{Fore.LIGHTYELLOW_EX}
-----------------------------
+------------
 """)
     
     try:
