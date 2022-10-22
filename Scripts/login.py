@@ -19,7 +19,7 @@ def sign_up():
     # If this condition is True then the password will be encrypted
     if(username and password and confirm_password) != '' and (confirm_password==password):
         encode = confirm_password.encode()
-        hash = hashlib.md5(encode).hexdigest()
+        hash = hashlib.sha256(encode).hexdigest()
 
         # Saving the encrypted password in 'credentials.txt' file
         with open("credentials.txt", "w") as f:
@@ -45,7 +45,7 @@ def sign_in():
     if(username and password) != '':
         # User input hashing for authentication
         authenticate = password.encode()
-        authenticate_hash = hashlib.md5(authenticate).hexdigest()
+        authenticate_hash = hashlib.sha256(authenticate).hexdigest()
 
         # Reading the existing username and password from the 'credentials.txt' file
         with open("credentials.txt", "r") as f:
