@@ -2,11 +2,11 @@
 # -*- coding: UTF-8 -*-
 import sqlite3
 
-# Creating the database (data.db)
+# Create the database (data.db)
 def create_database():
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
-    table = """CREATE TABLE VAULT(
+    table = """CREATE TABLE Vault(
             name VARCHAR(10000) PRIMARY KEY,
             username VARCHAR(10),
             password VARCHAR(5),
