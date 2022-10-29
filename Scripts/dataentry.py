@@ -2,11 +2,11 @@
 # -*- coding: UTF-8 -*-
 import sqlite3, Scripts.encrypt as encrypt
 
-# Importing encrypted data into the database
+# Import encrypted data into the database
 def enter_data(name,username,password,website,note):
     connection = sqlite3.connect("data.db")
     cursor = connection.cursor()
-    table = """INSERT INTO VAULT(name,username,password,website,note)
+    table = """INSERT INTO Vault(name,username,password,website,note)
             VALUES (?,?,?,?,?);"""
     
     name = encrypt.Encrypt(name)

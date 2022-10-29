@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
-#######################################################################################################
-########################################### Pass_Manager ##############################################
-#######################################################################################################
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+##################################################################################################################################
+########################################################## Pass_Manager ##########################################################
+##################################################################################################################################
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 ###
 ### Function: Allows you to store your critical passwords including usernames, emails and websites (URLs) of your online accounts.
 ###
@@ -25,30 +25,30 @@
 ### IMPORTANT:  I OFFER NO WARRANTY OR GUARANTEE FOR THIS SCRIPT. USE AT YOUR OWN RISK.
 ###             I tested it on my own and implemented some failsafes as best as I could,
 ###             but there could always be some kind of bug. You should inspect the code yourself.
-#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
+#~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 print("Importing Standard Libraries...")
-# Importing standard libraries
+# Import standard libraries
 from os import path
 import os, sys, time, string, random, platform
 print("Importing Script Modules...")
-# Importing module files
+# Import module files
 import Scripts.createdb as createdb
 import Scripts.generateKey as generateKey
 import Scripts.dataentry as dataentry
 import Scripts.dataprinting as dataprinting
 import Scripts.login as login
 print("Importing Third-Party Modules...")
-# Importing other (third-party) libraries
+# Import other (third-party) libraries
 import colorama
-from colorama import Fore
+from colorama import Fore as F, Back
 colorama.init(autoreset=True)
 
 print("Checking for available package updates...")
 # Updating required packages to the latest versions if exist
 os.system("pip install --upgrade -r requirements.txt")
 
-# Checks system platform to set correct console clear command
-# Clears console
+# Check system platform to set correct console clear command
+# Clear console
 clear_command = "cls" if platform.system() == "Windows" else "clear"
 os.system(clear_command)
 
@@ -58,147 +58,129 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     input("Press Enter to exit...")
     sys.exit()
 
-###################################### MAIN ##############################################
+############################################## MAIN ##############################################
 
-print(f"""{Fore.LIGHTYELLOW_EX}
-====================== Pass_Manager ======================={Fore.RESET}
-{Fore.GREEN}=== https://github.com/KafetzisThomas/Pass_Manager.git ====
-================= Author: KafetzisThomas ==================
------------------------------------------------------------
-{Fore.LIGHTYELLOW_EX}
-- Login -{Fore.RESET}
-1.Sign Up
-2.Sign In
-3.Exit{Fore.LIGHTYELLOW_EX}
----------
-""")
-
-# Login form
+# Login Options
 def access():
+    print(f"\n{F.LIGHTYELLOW_EX}======================= Pass_Manager =======================")
+    print("==== https://github.com/KafetzisThomas/Pass_Manager.git ====")
+    print("================== Author: KafetzisThomas ==================")
+    print("\nFunction: Allows you to store your critical passwords")
+    print("             including usernames, emails and websites (URLs)")
+    print("                 of your online accounts.")
+    print(f"\n> Enter {F.BLUE}Ctrl+C{F.RESET} to {F.RED}quit/cancel operation")
+    print(f"\n--------------- {F.YELLOW}Login Options{F.RESET} ------------------------------")
+    print(f"\t1. Sign Up - Enter {F.LIGHTRED_EX}new{F.RESET} credentials")
+    print(f"\t2. Sign In - Use your {F.LIGHTBLUE_EX}existing credentials")
+
     try:
-        choice = int(input(":"))
-        time.sleep(0.10)
-        if(choice==1):
-            login.sign_in()
-            time.sleep(0.10)
-            login.sign_up()
-            time.sleep(0.10)
-            login.sign_in()
-        elif(choice==2):
-            time.sleep(0.10)
-            login.sign_in()
-            time.sleep(0.10)
-        elif(choice==3):
-            print(f"{Fore.RED}Program closed.") 
-            sys.exit()
-        else:
-            print(f"{Fore.RED}Undefined choice.")
-            access()
-    except ValueError as err:
-        print(f"{Fore.RED}{err}")
-        access()
+        choice = input("\nChoice (1-2): ")
     except KeyboardInterrupt:
-        print(f"\n{Fore.RED}Program closed.")
+        print(f"\nExiting in {F.RED}5{F.RESET} seconds...")
+        time.sleep(5)
         sys.exit()
+
+    try:
+        if(choice=="1"):
+            login.sign_in()
+            login.sign_up()
+            login.sign_in()
+        elif(choice=="2"):
+            login.sign_in()
+        else:
+            print(f"{F.RED}Undefined choice.")
+            access()
+    except KeyboardInterrupt:
+        print(f"\n{F.RED}Operation cancelled.")
+        access()
 access()
 
+# Menu Options
 def menu():
-    print(f"""{Fore.LIGHTYELLOW_EX}
---- Menu ---{Fore.RESET}
-1.Add Item
-2.View Vault
-3.Exit{Fore.LIGHTYELLOW_EX}
-------------
-""")
+    print(f"> Enter {F.BLUE}Ctrl+C{F.RESET} to {F.RED}quit/cancel operation\n")
+    print(f"--------------- {F.YELLOW}Menu Options{F.RESET} ------------------------------")
+    print(f"\t1. Add Item - {F.LIGHTBLUE_EX}Generate/Save{F.RESET} passwords")
+    print(f"\t2. View {F.LIGHTMAGENTA_EX}Vault{F.RESET} - See your {F.LIGHTRED_EX}saved passwords{F.RESET}")
     
     try:
-        option = input(":")
-        time.sleep(0.10)
+        choice = input("\nChoice (1-2): ")
     except KeyboardInterrupt:
-        print(f"\n{Fore.RED}Program closed.")
+        print(f"\nExiting in {F.RED}5{F.RESET} seconds...")
+        time.sleep(5)
         sys.exit()
     
-    # Generating a secure password
-    if(option=="1"):
-        characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
-            
-        time.sleep(0.10)
-        length = int(input("Enter password length: "))
-        random.shuffle(characters)
-        passw = []
-        for i in range(length):
-            passw.append(random.choice(characters))
-            random.shuffle(passw)
-                
-            password = "".join(passw)
+    # Generate a secure password
+    if(choice=="1"):
+        try:
+            characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
+
+            length = int(input("\nEnter password length: "))
+            random.shuffle(characters)
+            passw = []
+            for i in range(length):
+                passw.append(random.choice(characters))
+                random.shuffle(passw)
+                    
+                password = "".join(passw)
+        except ValueError as err:
+            print(f"{F.RED}{err}")
+            menu()
+        except KeyboardInterrupt:
+            print(f"\n{F.RED}Operation cancelled.\n")
+            menu()
 
         def main():
             try:
-                # Checking if 'data.db' file exists
+                # Check if 'data.db' file exists
                 if(path.exists('data.db')==False):
-                    # Generating a universal key if it doesn't exist
+                    # Generate a universal key if it doesn't exist
                     generateKey.generateKey()
-                    # Creating a database if it doesn't exist
+                    # Create a database if it doesn't exist
                     createdb.create_database()
-                time.sleep(0.10)
-                # Option to continue/stop entring data
-                exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
-                while(exit==1):
-                    # Getting input from the user before storing information inside the database table (VAULT)
-                    time.sleep(0.10)
-                    name = input("\nName: ")
-                    time.sleep(0.10)
-                    username = input("Username: ")
-                    time.sleep(0.10)
-                    website = input("Website: ")
-                    time.sleep(0.10)
-                    note = input("\nNote: ")
-                    time.sleep(0.10)
-                    if(name and username and website) != '':
-                        dataentry.enter_data(f"Name: {Fore.GREEN}{name}",f"Username: {Fore.GREEN}{username}",f"Password: {Fore.GREEN}{password}",f"Website: {Fore.GREEN}{website}",f"\nNote: {Fore.GREEN}{note}")
-                        # Option to continue/stop entring data
-                        exit = int(input(f"Enter {Fore.GREEN}0{Fore.RESET} if you want to exit or {Fore.GREEN}1{Fore.RESET} to continue entring data: "))
-                        time.sleep(0.10)
-                        print(f"{Fore.RED}*Information stored successfully into your vault!")
-                    else:
-                        print(f"{Fore.RED}You did not fill all the fields.")
-                else:
-                    time.sleep(0.10)
-            except ValueError as err:
-                print(err)
-                main()
 
-        time.sleep(0.10)
-        # Printing out the generated password
-        print(f"\nYour new password is: {Fore.GREEN}{password}")
-        time.sleep(0.10)
+                # Get input from the user and store information inside the database table (Vault)
+                name = input("\nName: ")
+                username = input("Username: ")
+                website = input("Website: ")
+                note = input("\nNote: ")
+                if(name and username and website) != '':
+                    dataentry.enter_data(f"Name:     {F.GREEN}{name}",
+                                        f"Username: {F.GREEN}{username}",
+                                        f"Password: {F.RED}{password}",
+                                        f"Website:  {F.GREEN}{website}",
+                                        f"\nNote:     {F.LIGHTCYAN_EX}{note}")
+                    
+                    print(f"{F.RED}*Information Saved Successfully into your Vault!\n")
+                else:
+                    print(f"{F.RED}You did not fill all the fields.")
+                    main()
+            except KeyboardInterrupt:
+                print(f"\n{F.RED}Operation cancelled.\n")
+                menu()
+
+        # Print the generated password
+        print(f"\nYour new password is: {Back.GREEN}{F.BLACK} {password} ")
         # Option for saving the generated password 
-        save = input(f"Do you want to save that password? {Fore.LIGHTBLUE_EX}y/{Fore.RED}n{Fore.RESET}: ")
+        save = input(f"Do you want to save that password? {F.LIGHTBLUE_EX}y/{F.RED}n{F.RESET}: ")
         if(save.lower()=="y"):
             main()
             menu()
         elif(save.lower()=="n"):
-            print(f"{Fore.RED}Operation cancelled.")
-            time.sleep(0.10)
+            print(f"{F.RED}Operation cancelled.\n")
             menu()
         else:
-            print(f"{Fore.RED}Undefined choice.")
-            time.sleep(0.10)
+            print(f"{F.RED}Undefined choice.\n")
             menu()
 
-    if(option=="2"):
-        time.sleep(0.10)
-        print(f"\n{Fore.LIGHTYELLOW_EX}======== My Vault ========")
-        # Printing out the data from the database table as decrypted
+    if(choice=="2"):
+        print(f"\n{F.LIGHTYELLOW_EX}================ My Vault ================")
+        # Print the data from the database table as decrypted
         dataprinting.print_data()
-        time.sleep(0.10)
+        time.sleep(1)
+        print("\n")
         menu()
 
-    if(option=="3"):
-        print(f"{Fore.RED}Program closed.")
-        sys.exit()
     else:
-        print(f"{Fore.RED}Undefined choice.")
-        time.sleep(0.10)
+        print(f"{F.RED}Undefined choice.\n")
         menu()
 menu()
