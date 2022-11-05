@@ -40,7 +40,7 @@ import Scripts.login as login
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama
-from colorama import Fore as F, Back
+from colorama import Fore as F, Back, Style
 colorama.init(autoreset=True)
 
 print("Checking for available package updates...")
@@ -158,18 +158,33 @@ def menu():
                 print(f"\n{F.RED}Operation cancelled.\n")
                 menu()
 
-        # Print the generated password
-        print(f"\nYour new password is: {Back.GREEN}{F.BLACK} {password} ")
-        # Option for saving the generated password 
-        save = input(f"Do you want to save that password? {F.LIGHTBLUE_EX}y/{F.RED}n{F.RESET}: ")
-        if(save.lower()=="y"):
-            main()
-            menu()
-        elif(save.lower()=="n"):
-            print(f"{F.RED}Operation cancelled.\n")
-            menu()
-        else:
-            print(f"{F.RED}Undefined choice.\n")
+        try:
+            # Print the generated password
+            print(f"\nYour new password is: {Back.BLUE}{F.WHITE} {password} ")
+            print(f"\n> Type {F.GREEN}y{F.RESET} to save the above password. {Back.GREEN}{F.BLACK} Highly Recommended! ")
+            print(f"> Type {F.RED}n{F.RESET} to create a password by your own.")
+            print(f"\n*Enter {F.BLUE}Ctrl+C{F.RESET} to {F.RED}cancel{F.RESET} this operation.\n")
+            # Option for saving the generated password
+            save = input(f"Do you want to save that password? {F.GREEN}y{F.RESET}/{F.RED}n{F.RESET}: ")
+            # Save the generated password if user filled the required fields
+            if(save.lower()=="y"):
+                main()
+                menu()
+            elif(save.lower()=="n"):
+                print(f"> Use 8 or more characters with a mix of {F.GREEN}letters{F.RESET}, {F.GREEN}numbers{F.RESET} & {F.GREEN}symbols{F.RESET}.\n")
+                # Let user create a password by his own
+                password = input("Password: ")
+                if password != '':
+                    main()
+                    menu()
+                else:
+                    print(f"{F.RED}You did not fill all the fields.\n")
+                    menu()
+            else:
+                print(f"{F.RED}Undefined choice.\n")
+                menu()
+        except KeyboardInterrupt:
+            print(f"\n{F.RED}Operation cancelled.")
             menu()
 
     if(choice=="2"):
