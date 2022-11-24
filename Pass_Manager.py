@@ -6,16 +6,12 @@
 ##################################################################################################################################
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 ###
-### Function: Allows you to store your critical passwords including usernames, emails and websites (URLs) of your online accounts.
+### Function: Allows you to securely manage your saved passwords of your online accounts.
 ###
-### NOTES:    1. For security reasons, you'll need to overwrite the default username and password using the 'Sign Up' form
-###                                    that it is included in the software.		    	                     
-###				            >>> See the Readme for instructions on this.
+### NOTES:    1. Required Third-Party Packages: [pysqlitecipher],[cryptography],[colorama]
+###                 >>> See the Readme for instructions on how to install them.
 ###
-###           2. Required Third-Party Packages: [colorama],[cryptography]
-###                         >>> See the Readme for instructions on how to install them.
-###
-###           3. I am a total amateur at programming so if something doesn't work I'll try to fix it but might not
+###           2. I am a total amateur at programming so if something doesn't work I'll try to fix it but might not
 ###                even know how, so don't expect too much.
 ###
 ### Author:   KafetzisThomas

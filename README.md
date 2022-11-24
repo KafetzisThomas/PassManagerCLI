@@ -1,6 +1,6 @@
 <h1 align="center">Pass_Manager</h1>
 
-__What Is This?__ - Allows you to store your critical passwords including usernames, emails and websites (URLs) of your online accounts.
+__What Is This?__ - Allows you to securely manage your saved passwords of your online accounts.
 
 __How to Download:__ Click [here](https://github.com/KafetzisThomas/Pass_Manager/archive/refs/heads/main.zip) to download.
 
