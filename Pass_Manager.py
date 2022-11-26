@@ -52,9 +52,9 @@ if sys.version_info[0] < 3 or sys.version_info[1] < 6:
 
 ############################################## MAIN ##############################################
 
-print(f"\n{F.LIGHTYELLOW_EX}======================= Pass_Manager =======================")
-print("==== https://github.com/KafetzisThomas/Pass_Manager.git ====")
-print("================== Author: KafetzisThomas ==================")
+print(f"\n{F.LIGHTYELLOW_EX}======================= Pass_Manager v{version} =======================")
+print("========= https://github.com/KafetzisThomas/Pass_Manager ==========")
+print("===================== Author: KafetzisThomas ======================")
 print("\nFunction: Allows you to securely manage your saved passwords")
 print("                     of your online accounts.")
 print(f"\n> Enter {F.BLUE}Ctrl+C{F.RESET} to {F.RED}quit/cancel operation")
