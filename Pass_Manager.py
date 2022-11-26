@@ -145,8 +145,25 @@ def menu():
 
     elif(choice=="2"):
         db.print_data()
-        print("\n")
-        menu()
+        def vault_options():
+            print(f"\n\n> Enter {F.BLUE}Ctrl+C{F.RESET} to {F.RED}quit/cancel operation\n")
+            print(f"--------------- {F.YELLOW}Vault Options{F.RESET} ------------------------------")
+            print(f"\t1. Refresh {F.LIGHTBLUE_EX}Vault{F.RESET}")
+            print(f"\t2. {F.RED}Delete{F.RESET} a record")
+            
+            try:
+                choice = input("\nChoice (1-2): ")
+                if(choice=="1"):
+                    db.print_data()
+                    vault_options()
+                elif(choice=="2"):
+                    db.print_data()
+                    db.delete_data()
+                    vault_options()
+            except KeyboardInterrupt:
+                print(f"\n{F.RED}Operation canceled.\n")
+                menu() 
+        vault_options()
 
     elif(choice=="3"):
         db.change_master_password()

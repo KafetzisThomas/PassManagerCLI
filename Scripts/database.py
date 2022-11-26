@@ -5,6 +5,7 @@ import time, sys, getpass, colorama
 from colorama import Fore as F
 colorama.init(autoreset=True)
 
+# Set database settings
 def set_database():
     global obj
     
@@ -55,6 +56,13 @@ def print_data():
         for x in i:
             print(x)
     time.sleep(1)
+
+def delete_data():
+    # Ask user for which record to be deleted
+    delete_id = int(input("\n\nWhich specific record do you want to delete from the vault?\n> "))
+
+    # Delete data from a table
+    obj.deleteDataInTable('vault' , delete_id , commit = True , raiseError = True , updateId = True)
 
 def change_master_password():
     # Ask for a new master password
