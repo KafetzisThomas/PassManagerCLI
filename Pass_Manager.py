@@ -25,7 +25,7 @@ version = "1.1.0"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 print("Importing Standard Libraries...")
 # Import standard libraries
-import os, sys, time, string, random, platform
+import os, sys, time, string, secrets, platform
 print("Importing Script Modules...")
 # Import module files
 import Scripts.database as db
@@ -80,16 +80,18 @@ def menu():
     # Generate a secure password
     if(choice=="1"):
         try:
-            characters = list(string.ascii_letters + string.digits + "!@#$%^&*()")
+            # Define the alphabet
+            letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
+            alphabet = (letters + digits + special_chars)
 
-            length = int(input("\nEnter password length: "))
-            random.shuffle(characters)
-            passw = []
-            for i in range(length):
-                passw.append(random.choice(characters))
-                random.shuffle(passw)
-                    
-                password = "".join(passw)
+            # Set password length
+            pwd_length = int(input("\nEnter password length: "))
+
+            # Generate a password string
+            password = ''
+            for i in range(pwd_length):
+                password += ''.join(secrets.choice(alphabet))
+        
         except ValueError as err:
             print(f"{F.RED}{err}\n")
             menu()

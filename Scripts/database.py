@@ -49,7 +49,7 @@ def insert_data(name,username,password,website,note):
     obj.insertIntoTable('vault' , insertList , commit = True)
 
 def print_data():
-    print(f"\n{F.LIGHTYELLOW_EX}================ My Vault ================")
+    print(f"\n{F.LIGHTYELLOW_EX}========================= My Vault =========================")
     # Print the data from the database table as decrypted
     insert_data = (obj.getDataFromTable('vault' , raiseConversionError = True , omitID = False))
     for i in insert_data[1:]:
