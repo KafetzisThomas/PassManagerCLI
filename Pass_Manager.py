@@ -107,7 +107,12 @@ def menu():
                 website = input("Website: ")
                 note = input("\nNote: ")
                 if(name and username and website) != '':
-                    db.insert_data(name,username,password,website,note)
+                    db.insert_data(f"Name:     {F.GREEN}{name}",
+                                   f"Username: {F.GREEN}{username}",
+                                   f"Password: {F.GREEN}{password}",
+                                   f"Website:  {F.GREEN}{website}",
+                                   f"\nNote:     {F.LIGHTCYAN_EX}{note}")
+                    
                     print(f"{F.RED}*Information Saved Successfully into your Vault!\n")
                 else:
                     print(f"{F.RED}You did not fill all the fields.")
