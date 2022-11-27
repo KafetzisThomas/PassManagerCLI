@@ -16,8 +16,6 @@ Use [pip](https://pip.pypa.io/en/stable) to install the required packages:
 pip install -r requirements.txt
 ```
 
-___Make note that after installing the required packages, the software will be checking for package updates at every startup.___
-
 ## Usage Notes - READ THIS
 
 1. To use this script, run the ```Pass_Manager.py``` file in your console and that's it!
@@ -27,8 +25,8 @@ ___Make note that after installing the required packages, the software will be c
    __Mac/Linux:__
    ``` ./Pass_Manager.py ```
    * __For Mac/Linux:__ Make sure you make it executable with the following command:
-   ```
-   chmod +x Pass_Manager.py
-   ```
+      ```
+      chmod +x Pass_Manager.py
+      ```
 
 2. I am a total amateur at programming so if something doesn't work I'll try to fix it but might not even know how, so don't expect too much. __I OFFER NO WARRANTY OR GUARANTEE FOR THIS SCRIPT. USE AT YOUR OWN RISK.__ I tested it on my own and implemented some failsafes as best as I could, but there could always be some kind of bug. You should inspect the code yourself.

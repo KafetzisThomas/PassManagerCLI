@@ -12,7 +12,7 @@
 ###                 >>> See the Readme for instructions on how to install them.
 ###
 ###           2. I am a total amateur at programming so if something doesn't work I'll try to fix it but might not
-###                even know how, so don't expect too much.
+###                 even know how, so don't expect too much.
 ###
 ### Author:   KafetzisThomas
 ###
@@ -34,10 +34,6 @@ print("Importing Third-Party Modules...")
 import colorama
 from colorama import Fore as F, Back
 colorama.init(autoreset=True)
-
-print("Checking for available package updates...")
-# Update required packages to the latest versions if exist
-os.system("pip install --upgrade -r requirements.txt")
 
 # Check system platform to set correct console clear command
 # Clear console
@@ -68,7 +64,8 @@ def menu():
     print(f"\t1. Add Item - {F.LIGHTBLUE_EX}Generate/Save{F.RESET} passwords")
     print(f"\t2. View {F.LIGHTMAGENTA_EX}Vault{F.RESET} - See your {F.LIGHTRED_EX}saved passwords{F.RESET}")
     print(f"--------------- {F.YELLOW}Other Options{F.RESET} ------------------------------")
-    print(f"\t3. {F.LIGHTCYAN_EX}Change{F.RESET} Master password")
+    print(f"\t3. Check & Download Package {F.LIGHTGREEN_EX}Updates")
+    print(f"\t4. {F.LIGHTCYAN_EX}Change{F.RESET} Master password")
     
     try:
         choice = input("\nChoice (1-2): ")
@@ -173,6 +170,18 @@ def menu():
         vault_options()
 
     elif(choice=="3"):
+        # Update required packages to the latest versions if exist
+        print("\nChecking for available package updates...")
+        os.system("pip install --upgrade -r requirements.txt")
+        print("\nAll required packages are up to date.")
+        input("Press Enter to get back to the Menu...")
+        # Check system platform to set correct console clear command
+        # Clear console
+        clear_command = "cls" if platform.system() == "Windows" else "clear"
+        os.system(clear_command)
+        menu()
+
+    elif(choice=="4"):
         db.change_master_password()
         menu()
     else:
