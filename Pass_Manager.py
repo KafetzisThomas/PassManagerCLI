@@ -174,6 +174,9 @@ def menu():
             except ValueError as err:
                 print(f"{F.RED}{err}")
                 vault_options()
+            except RuntimeError as err:
+                print(f"{F.RED}Record ID not found.")
+                vault_options()
             except KeyboardInterrupt:
                 print(f"\n{F.RED}Operation canceled.\n")
                 menu() 
