@@ -61,7 +61,7 @@ def print_data():
 
 def delete_data():
     # Ask user for which record to be deleted
-    delete_id = int(input("\n\nWhich specific record do you want to delete from the vault?\n> "))
+    delete_id = int(input("\n\nWhich specific record (ID) do you want to delete from the vault?\n> "))
 
     # Delete data from a table
     obj.deleteDataInTable('vault' , delete_id , commit = True , raiseError = True , updateId = True)

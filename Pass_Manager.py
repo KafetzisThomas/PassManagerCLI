@@ -166,6 +166,7 @@ def menu():
                 elif(choice=="2"):
                     db.print_data()
                     db.delete_data()
+                    print(f"{F.RED}Record ID Successfully deleted.")
                     vault_options()
                 else:
                     print(f"{F.RED}Undefined choice.")
