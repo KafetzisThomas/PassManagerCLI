@@ -69,6 +69,7 @@ def delete_data():
 def change_master_password():
     # Ask for a new master password
     # Get a hidden password input
-    new_password = input("Master Password: ")
+    new_password = getpass.getpass("\nMaster Password: ")
     for i in obj.changePassword(new_password):
         print("Password changed.")
+    print("\n")
