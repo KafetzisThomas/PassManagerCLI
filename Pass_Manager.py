@@ -175,9 +175,7 @@ def menu():
         os.system("pip install --upgrade -r requirements.txt")
         print("\nAll required packages are up to date.")
         input("Press Enter to get back to the Menu...")
-        # Check system platform to set correct console clear command
         # Clear console
-        clear_command = "cls" if platform.system() == "Windows" else "clear"
         os.system(clear_command)
         menu()
 
