@@ -171,6 +171,9 @@ def menu():
                     print(f"{F.RED}Undefined choice.")
                     vault_options()
             
+            except ValueError as err:
+                print(f"{F.RED}{err}")
+                vault_options()
             except KeyboardInterrupt:
                 print(f"\n{F.RED}Operation canceled.\n")
                 menu() 
