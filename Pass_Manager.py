@@ -69,6 +69,7 @@ def menu():
     
     try:
         choice = input("\nChoice (1-2): ")
+    
     except KeyboardInterrupt:
         print(f"\nExiting in {F.RED}5{F.RESET} seconds...")
         time.sleep(5)
@@ -114,6 +115,7 @@ def menu():
                 else:
                     print(f"{F.RED}You did not fill all the fields.")
                     main()
+            
             except KeyboardInterrupt:
                 print(f"\n{F.RED}Operation cancelled.\n")
                 menu()
@@ -143,6 +145,7 @@ def menu():
             else:
                 print(f"{F.RED}Undefined choice.\n")
                 menu()
+        
         except KeyboardInterrupt:
             print(f"\n{F.RED}Operation cancelled.\n")
             menu()
@@ -164,6 +167,10 @@ def menu():
                     db.print_data()
                     db.delete_data()
                     vault_options()
+                else:
+                    print(f"{F.RED}Undefined choice.")
+                    vault_options()
+            
             except KeyboardInterrupt:
                 print(f"\n{F.RED}Operation canceled.\n")
                 menu() 
