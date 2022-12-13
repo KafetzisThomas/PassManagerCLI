@@ -68,7 +68,7 @@ def menu():
     print(f"\t4. {F.LIGHTCYAN_EX}Change{F.RESET} Master password")
     
     try:
-        choice = input("\nChoice (1-2): ")
+        choice = input("\nChoice (1-4): ")
     
     except KeyboardInterrupt:
         print(f"\nExiting in {F.RED}5{F.RESET} seconds...")
