@@ -15,7 +15,7 @@ def set_database():
         pwd = getpass.getpass("\nMaster Password: ")
         if(pwd) != '':
 
-            obj = sqlitewrapper.SqliteCipher(dataBasePath='data.db' , checkSameThread=True , password=pwd)
+            obj = sqlitewrapper.SqliteCipher(dataBasePath='vault.db' , checkSameThread=True , password=pwd)
             print(f"\n> Logged in {F.GREEN}Successfully")
 
             colList = [
