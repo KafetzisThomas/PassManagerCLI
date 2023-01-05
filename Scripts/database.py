@@ -49,22 +49,43 @@ def insert_data(name,username,password,website,note):
     obj.insertIntoTable('vault' , insertList , commit = True)
 
 def print_data():
-    print(f"\n{F.LIGHTYELLOW_EX}================ My Vault ================")
+    print(f"\n{F.LIGHTYELLOW_EX}============= My Vault =============")
     # Print the data from the database table as decrypted
     insert_data = (obj.getDataFromTable('vault' , raiseConversionError = True , omitID = False))
     for i in insert_data[1:]:
         for x in i:
-            print(f"{F.LIGHTYELLOW_EX}------------------------------------------")
-            for j in x:
-                print(j)
+            print(f"{F.LIGHTYELLOW_EX}------------------------------------") 
+            print(f"ID:       \t{F.CYAN}{x[0]}")
+            print(f"Name:     \t{F.GREEN}{x[1]}")
+            print(f"Username: \t{F.GREEN}{x[2]}")
+            print(f"Password: \t{F.GREEN}{x[3]}")
+            print(f"Website:  \t{F.GREEN}{x[4]}")
+            print(f"\nNote:     \t{F.GREEN}{x[5]}")
+
     time.sleep(1)
 
 def delete_data():
-    # Ask user for which record to be deleted
+    # Ask user for which record (ID) of the row want data to be deleted
     delete_id = int(input("\n\nWhich specific record (ID) do you want to delete from the vault?\n> "))
 
-    # Delete data from a table
+    # Delete data from table (vault)
     obj.deleteDataInTable('vault' , delete_id , commit = True , raiseError = True , updateId = True)
+
+def update_data():
+    # Ask user for which record (ID) of the row want data to be updated
+    update_id = int(input(f"\n\nWhich specific {F.LIGHTRED_EX}record (ID){F.RESET}"
+                            f" do you want to {F.LIGHTBLUE_EX}update{F.RESET} from the vault?\n> "))
+    
+    # Ask user for name of the column to change value in row
+    colName = input(f"\nWhich specific {F.LIGHTCYAN_EX}column name{F.RESET}"
+                        f" do you want to update from the {F.LIGHTMAGENTA_EX}vault{F.RESET}?"
+                            "\n\t(name,username,password,website,note)\n> ").lower()
+    
+    # Ask user for new value to be inserted into colName
+    colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
+
+    # Update data from table (vault)
+    obj.updateInTable('vault' , update_id , colName , colValue , commit = True , raiseError = True)
 
 def change_master_password():
     # Ask for a new master password

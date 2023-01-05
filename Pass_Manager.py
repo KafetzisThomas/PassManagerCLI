@@ -105,13 +105,8 @@ def menu():
                 website = input("Website: ")
                 note = input("\nNote: ")
                 if(name and username and website) != '':
-                    db.insert_data(f"Name:     {F.GREEN}{name}",
-                                   f"Username: {F.GREEN}{username}",
-                                   f"Password: {F.GREEN}{password}",
-                                   f"Website:  {F.GREEN}{website}",
-                                   f"\nNote:     {F.LIGHTCYAN_EX}{note}")
-                    
-                    print(f"{F.RED}*Information Saved Successfully into your Vault!\n")
+                    db.insert_data(name, username, password, website, note)
+                    print(f"{F.RED}Information Saved Successfully into your Vault.\n")
                 else:
                     print(f"{F.RED}You did not fill all the fields.")
                     main()
@@ -157,9 +152,10 @@ def menu():
             print(f"--------------- {F.YELLOW}Vault Options{F.RESET} ------------------------------")
             print(f"\t1. Refresh {F.LIGHTBLUE_EX}Vault{F.RESET}")
             print(f"\t2. {F.RED}Delete{F.RESET} a record")
+            print(f"\t3. Update {F.LIGHTRED_EX}record{F.RESET} info")
             
             try:
-                choice = input("\nChoice (1-2): ")
+                choice = input("\nChoice (1-3): ")
                 if(choice=="1"):
                     db.print_data()
                     vault_options()
@@ -167,6 +163,11 @@ def menu():
                     db.print_data()
                     db.delete_data()
                     print(f"{F.RED}Record ID Successfully deleted.")
+                    vault_options()
+                elif(choice=="3"):
+                    db.print_data()
+                    db.update_data()
+                    print(f"{F.RED}Information Successfully updated.")
                     vault_options()
                 else:
                     print(f"{F.RED}Undefined choice.")
