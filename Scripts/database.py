@@ -13,10 +13,11 @@ def set_database():
         # Ask the user for the existing master password
         # Get a hidden password input
         pwd = getpass.getpass("\nMaster Password: ")
+        
         if(pwd) != '':
 
             obj = sqlitewrapper.SqliteCipher(dataBasePath='vault.db' , checkSameThread=True , password=pwd)
-            print(f"\n> Logged in {F.GREEN}Successfully")
+            print(f"\n> Logged in {F.LIGHTGREEN_EX}Successfully")
 
             colList = [
             ["name" , "TEXT"],
@@ -28,9 +29,11 @@ def set_database():
 
             # Create table
             obj.createTable('vault' , colList , makeSecure=True , commit=True)
+        
         else:
             print(f"{F.RED}You did not fill the field.")
             set_database()
+    
     except ValueError:
         pass
     except RuntimeError:
@@ -55,12 +58,12 @@ def print_data():
     for i in insert_data[1:]:
         for x in i:
             print(f"{F.LIGHTYELLOW_EX}------------------------------------") 
-            print(f"ID:       \t{F.CYAN}{x[0]}")
-            print(f"Name:     \t{F.GREEN}{x[1]}")
-            print(f"Username: \t{F.GREEN}{x[2]}")
-            print(f"Password: \t{F.GREEN}{x[3]}")
-            print(f"Website:  \t{F.GREEN}{x[4]}")
-            print(f"\nNote:     \t{F.GREEN}{x[5]}")
+            print(f"ID:       \t{F.LIGHTCYAN_EX}{x[0]}")
+            print(f"Name:     \t{F.LIGHTGREEN_EX}{x[1]}")
+            print(f"Username: \t{F.LIGHTGREEN_EX}{x[2]}")
+            print(f"Password: \t{F.LIGHTRED_EX}{x[3]}")
+            print(f"Website:  \t{F.LIGHTGREEN_EX}{x[4]}")
+            print(f"\nNote:     \t{F.LIGHTGREEN_EX}{x[5]}")
 
     time.sleep(1)
 
