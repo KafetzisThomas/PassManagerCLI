@@ -27,26 +27,26 @@ version = "1.2.0"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 print("Importing Standard Libraries...")
 # Import standard libraries
-import os, sys, time, string, secrets, platform
+import os, sys, time, platform
 print("Importing Script Modules...")
 # Import module files
 import Scripts.database as db
+from Scripts.password_generator import generate_password
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama
 from colorama import Fore as F, Back as B
 colorama.init(autoreset=True)
 
-# Check system platform to set correct console clear command
-# Clear console
-clear_command = "cls" if platform.system() == "Windows" else "clear"
-os.system(clear_command)
-
 # Run check on python version, must be 3.6 or higher because of f strings
 if sys.version_info[0] < 3 or sys.version_info[1] < 6:
     print("Error Code U-2: This program requires running python 3.6 or higher! You are running" + str(sys.version_info[0]) + "." + str(sys.version_info[1]))
     input("Press Enter to exit...")
     sys.exit()
+
+# Check system platform to set correct console clear command
+clear_command = "cls" if platform.system() == "Windows" else "clear"
+os.system(clear_command)  # Clear console
 
 ############################################## MAIN ##############################################
 
@@ -77,21 +77,9 @@ def menu():
         time.sleep(5)
         sys.exit()
     
-    # Generate a secure password
     if choice == "1":
         try:
-            # Define the alphabet
-            letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
-            alphabet = (letters + digits + special_chars)
-
-            # Set password length
-            pwd_length = int(input("\nEnter password length: "))
-
-            # Generate a password string
-            password = ''
-            for i in range(pwd_length):
-                password += ''.join(secrets.choice(alphabet))
-        
+            password = generate_password()
         except ValueError as err:
             print(f"{F.LIGHTRED_EX}{err}\n")
             menu()
