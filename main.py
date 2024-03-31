@@ -30,7 +30,7 @@ print("Importing Standard Libraries...")
 import os, sys, time, platform
 print("Importing Script Modules...")
 # Import module files
-import Scripts.database as db
+
 from Scripts.password_generator import generate_password
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
@@ -57,9 +57,15 @@ print("\nFunction: Allows you to securely manage your saved passwords")
 print("                     of your online accounts.")
 print(f"\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation")
 print(f"> Note that your typing is {F.LIGHTGREEN_EX}hidden{F.RESET}")
-db.set_database()
+#db.set_database()
 
-# Menu Options
+if not os.path.exists("vault.db"):
+    from Scripts.database import setup_login
+    setup_login()
+else:
+    from Scripts.database import sign_in
+    sign_in()
+
 def menu():
     print(f"> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
     print(f"--------------- {F.LIGHTYELLOW_EX}Menu Options{F.RESET} -------------------------------")
@@ -71,7 +77,7 @@ def menu():
     
     try:
         choice = input("\nChoice (1-4): ")
-    
+
     except KeyboardInterrupt:
         print(f"\nExiting in {F.LIGHTRED_EX}5{F.RESET} seconds...")
         time.sleep(5)
@@ -96,7 +102,7 @@ def menu():
                 note = input("\nNote: ")
                 
                 if name and username and website != '':
-                    db.insert_data(name, username, password, website, note)
+                    #db.insert_data(name, username, password, website, note)
                     print(f"{F.LIGHTRED_EX}Information Saved Successfully into your Vault.\n")
                 else:
                     print(f"{F.LIGHTRED_EX}You did not fill all the fields.")
@@ -141,7 +147,7 @@ def menu():
             menu()
 
     elif choice == "2":
-        db.print_data()       
+        #db.print_data()       
         
         def vault_options():
             print(f"\n\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
@@ -154,16 +160,16 @@ def menu():
                 choice = input("\nChoice (1-3): ")
                 
                 if choice == "1":
-                    db.print_data()
+                    #db.print_data()
                     vault_options()
                 elif choice == "2":
-                    db.print_data()
-                    db.delete_data()
+                    #db.print_data()
+                    #db.delete_data()
                     print(f"{F.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
                 elif choice == "3":
-                    db.print_data()
-                    db.update_data()
+                    #db.print_data()
+                    #db.update_data()
                     print(f"{F.LIGHTRED_EX}Information Successfully updated.")
                     vault_options()
                 else:
@@ -194,7 +200,7 @@ def menu():
         menu()
 
     elif choice == "4":
-        db.change_master_password()
+        #db.change_master_password()
         menu()
     
     else:
