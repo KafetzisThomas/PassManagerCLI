@@ -2,6 +2,8 @@
 # -*- coding: UTF-8 -*-
 import sqlite3, sys, getpass, bcrypt
 from Scripts.user import User
+from prettytable import from_db_cursor
+
 
 
 def create_connection():
@@ -40,6 +42,16 @@ def get_master_password_by_username(cur, master_username):
 
 #conn, cur = create_connection()
 #print(get_master_password_by_username(cur, "thomas"))
+
+
+def print_data(cur):
+    cur.execute("SELECT * FROM items")
+    data = cur.fetchall()
+    print(data)
+
+    cur.execute("SELECT name, username, password, website, notes, date_posted FROM items")
+    mytable = from_db_cursor(cur)
+    print(mytable)
 
 
 def setup_login():

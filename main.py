@@ -32,6 +32,8 @@ print("Importing Script Modules...")
 # Import module files
 
 from Scripts.password_generator import generate_password
+from Scripts.database import insert_data_to_items, create_connection, print_data
+from Scripts.user import Item
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama
@@ -99,10 +101,14 @@ def menu():
                 name = input("\nName: ")
                 username = input("Username: ")
                 website = input("Website: ")
-                note = input("\nNote: ")
-                
+                notes = input("\nNote: ")
+
                 if name and username and website != '':
                     #db.insert_data(name, username, password, website, note)
+                    conn, cur = create_connection()
+                    from datetime import datetime
+                    item = Item(name=name, date_posted=datetime.now(), website=website, username=username, password=password, notes=notes)
+                    insert_data_to_items(conn, cur, item)
                     print(f"{F.LIGHTRED_EX}Information Saved Successfully into your Vault.\n")
                 else:
                     print(f"{F.LIGHTRED_EX}You did not fill all the fields.")
@@ -118,10 +124,10 @@ def menu():
             print(f"\n> Type {F.LIGHTGREEN_EX}y{F.RESET} to save the above password. {B.LIGHTGREEN_EX}{F.BLACK} Highly Recommended! ")
             print(f"> Type {F.LIGHTRED_EX}n{F.RESET} to create a password by your own.")
             print(f"\n*Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}cancel{F.RESET} this operation.\n")
-            
+
             # Option for saving the generated password
             save = input(f"Do you want to save that password? {F.GREEN}y{F.RESET}/{F.RED}n{F.RESET}: ")
-            
+
             # Save the generated password if user filled the required fields
             if save.lower() == "y":
                 main()
@@ -137,17 +143,19 @@ def menu():
                 else:
                     print(f"{F.LIGHTRED_EX}You did not fill all the fields.\n")
                     menu()
-            
+
             else:
                 print(f"{F.LIGHTRED_EX}Undefined choice.\n")
                 menu()
-        
+
         except KeyboardInterrupt:
             print(f"\n{F.LIGHTRED_EX}Operation cancelled.\n")
             menu()
 
     elif choice == "2":
-        #db.print_data()       
+        #db.print_data()
+        _, cur = create_connection()
+        print_data(cur)
         
         def vault_options():
             print(f"\n\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
