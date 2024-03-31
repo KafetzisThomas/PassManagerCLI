@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-import sqlite3, sys, getpass
+import sqlite3, sys, getpass, bcrypt
 from Scripts.user import User
 
 
@@ -49,24 +49,28 @@ def setup_login():
     create_credentials_table(cur)
     create_items_table(cur)
     master_username = input("\nMaster Username: ")
-    master_password = getpass.getpass("\nMaster Password: ")
+    master_password = getpass.getpass("\nMaster Password: ").encode('utf-8')
     if master_username != '' and master_password != '':
-        user = User(master_username, master_password)
+        salt = bcrypt.gensalt()
+        hashed_password = bcrypt.hashpw(master_password, salt)
+        user = User(master_username, hashed_password)
         insert_data_to_credentials(conn, cur, user)
 
 def sign_in():
     _, cur = create_connection()
     master_username = input("\nMaster Username: ")
-    master_password = getpass.getpass("\nMaster Password: ")
+    master_password = getpass.getpass("\nMaster Password: ").encode('utf-8')
     stored_username = get_master_password_by_username(cur, master_username)
-    stored_password = get_master_password_by_username(cur, "thomas")
+    print(stored_username)
+    stored_password = get_master_password_by_username(cur, master_username)
+    print(stored_password)
     try:
-        if master_username == stored_username[0] and master_password == stored_password[1]:
+        if master_username == stored_username[0] and bcrypt.checkpw(master_password, stored_password[1]):
             print("ok")
         else:
             sys.exit()
     except TypeError:
-        pass
+        sys.exit()
 
 
 def close_connection(conn):
