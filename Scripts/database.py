@@ -60,6 +60,12 @@ def update_data(conn, cur, colName, colValue, update_record, identifier_column):
         cur.execute(f"UPDATE items SET {colName} = ? WHERE {identifier_column} = ?", (colValue, update_record))
 
 
+def delete_data(conn, cur, colName):
+    # Delete data from table (vault)
+    with conn:
+        cur.execute('DELETE FROM items WHERE name = ?', (colName,))
+
+
 def setup_login():
     # Ask the user for the existing master password
     # Get a hidden password input

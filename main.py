@@ -32,7 +32,7 @@ print("Importing Script Modules...")
 # Import module files
 
 from Scripts.password_generator import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data, update_data
+from Scripts.database import insert_data_to_items, create_connection, print_data, update_data, delete_data
 from Scripts.user import Item
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
@@ -174,6 +174,12 @@ def menu():
                 elif choice == "2":
                     #db.print_data()
                     print_data(cur)
+
+                    # Ask user for which record (ID) of the row want data to be deleted
+                    delete_record = input("\n\nWhich specific record (name) do you want to delete from the vault?\n> ")
+
+                    delete_data(conn, cur, delete_record)
+
                     #db.delete_data()
                     print(f"{F.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
