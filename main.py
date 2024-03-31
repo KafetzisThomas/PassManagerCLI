@@ -27,16 +27,16 @@ version = "1.2.0"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 print("Importing Standard Libraries...")
 # Import standard libraries
-import os, sys, time, platform
+import os, sys, time, platform, getpass
 print("Importing Script Modules...")
 # Import module files
 
 from Scripts.password_generator import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data, update_data, delete_data
+from Scripts.database import insert_data_to_items, create_connection, print_data, update_data, delete_data, update_credentials_data
 from Scripts.user import Item
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
-import colorama
+import colorama, bcrypt
 from colorama import Fore as F, Back as B
 colorama.init(autoreset=True)
 
@@ -199,7 +199,7 @@ def menu():
                     # Ask user for new value
                     colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
 
-                    update_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue, identifier_column=colName)
+                    update_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue)
 
                     #db.update_data()
                     print(f"{F.LIGHTRED_EX}Information Successfully updated.")
@@ -233,8 +233,15 @@ def menu():
 
     elif choice == "4":
         #db.change_master_password()
+        conn, cur = create_connection()
+        master_username = input("\nMaster Username: ")
+        master_password = getpass.getpass("\nMaster Password: ").encode('utf-8')
+        if master_username != '' and master_password != '':
+            salt = bcrypt.gensalt()
+            hashed_password = bcrypt.hashpw(master_password, salt)
+            update_credentials_data(conn, cur, hashed_password, master_username)
+
         menu()
-    
     else:
         print(f"{F.LIGHTRED_EX}Undefined choice.\n")
         menu()

@@ -54,16 +54,22 @@ def print_data(cur):
     print(mytable)
 
 
-def update_data(conn, cur, colName, colValue, update_record, identifier_column):
+def update_data(conn, cur, colName, colValue, update_record):
     # Update data from table (vault)
     with conn:
-        cur.execute(f"UPDATE items SET {colName} = ? WHERE {identifier_column} = ?", (colValue, update_record))
+        cur.execute(f"UPDATE items SET {colName} = ? WHERE name = ?", (colValue, update_record))
 
 
 def delete_data(conn, cur, colName):
     # Delete data from table (vault)
     with conn:
         cur.execute('DELETE FROM items WHERE name = ?', (colName,))
+
+
+def update_credentials_data(conn, cur, colValue, update_record):
+    # Update data from table (vault)
+    with conn:
+        cur.execute(f"UPDATE credentials SET master_password = ? WHERE master_username = ?", (colValue, update_record))
 
 
 def setup_login():
