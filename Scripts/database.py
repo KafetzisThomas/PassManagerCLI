@@ -54,6 +54,12 @@ def print_data(cur):
     print(mytable)
 
 
+def update_data(conn, cur, colName, colValue, update_record, identifier_column):
+    # Update data from table (vault)
+    with conn:
+        cur.execute(f"UPDATE items SET {colName} = ? WHERE {identifier_column} = ?", (colValue, update_record))
+
+
 def setup_login():
     # Ask the user for the existing master password
     # Get a hidden password input

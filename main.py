@@ -32,7 +32,7 @@ print("Importing Script Modules...")
 # Import module files
 
 from Scripts.password_generator import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data
+from Scripts.database import insert_data_to_items, create_connection, print_data, update_data
 from Scripts.user import Item
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
@@ -154,7 +154,7 @@ def menu():
 
     elif choice == "2":
         #db.print_data()
-        _, cur = create_connection()
+        conn, cur = create_connection()
         print_data(cur)
         
         def vault_options():
@@ -169,14 +169,32 @@ def menu():
                 
                 if choice == "1":
                     #db.print_data()
+                    print_data(cur)
                     vault_options()
                 elif choice == "2":
                     #db.print_data()
+                    print_data(cur)
                     #db.delete_data()
                     print(f"{F.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
                 elif choice == "3":
                     #db.print_data()
+                    print_data(cur)
+                    
+                    # Ask user for which record (name) of the row want data to be updated
+                    update_record = input(f"\n\nWhich specific {F.LIGHTRED_EX}record (name){F.RESET}"
+                                            f" do you want to {F.LIGHTBLUE_EX}update{F.RESET} from the vault?\n> ")
+                    
+                    # Ask user for name of the column to change value in row
+                    colName = input(f"\nWhich specific {F.LIGHTCYAN_EX}column name{F.RESET}"
+                                        f" do you want to update from the {F.LIGHTMAGENTA_EX}vault{F.RESET}?"
+                                            "\n\t(name, username, password, website, notes)\n> ").lower()
+                    
+                    # Ask user for new value
+                    colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
+
+                    update_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue, identifier_column=colName)
+
                     #db.update_data()
                     print(f"{F.LIGHTRED_EX}Information Successfully updated.")
                     vault_options()
