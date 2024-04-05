@@ -5,6 +5,7 @@ from Scripts.user import User
 from prettytable import from_db_cursor
 from cryptography.fernet import Fernet
 from prettytable import PrettyTable
+from Scripts.utils import encrypt, decrypt
 
 #key = Fernet.generate_key()
 
@@ -39,12 +40,6 @@ def insert_data_to_credentials(conn, cur, user):
         cur.execute("INSERT INTO credentials VALUES (:master_username, :master_password, :key)", {'master_username': user.master_username, 'master_password': user.master_password, 'key': key})
     return key
 
-def encrypt(message, key):
-    return Fernet(key).encrypt(message)
-
-
-def decrypt(token, key):
-    return Fernet(key).decrypt(token)
 
 def insert_data_to_items(conn, cur, item):
     f = Fernet(key)

@@ -1,6 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
 import string, secrets
+from cryptography.fernet import Fernet
+
+
+def encrypt(message, key):
+    return Fernet(key).encrypt(message)
+
+
+def decrypt(token, key):
+    return Fernet(key).decrypt(token)
+
 
 def generate_password():
   '''Generate a secure password'''

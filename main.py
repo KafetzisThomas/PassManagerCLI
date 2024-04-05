@@ -31,7 +31,7 @@ import os, sys, time, platform, getpass
 print("Importing Script Modules...")
 # Import module files
 
-from Scripts.password_generator import generate_password
+from Scripts.utils import generate_password
 from Scripts.database import insert_data_to_items, create_connection, print_data, update_data, delete_data, update_credentials_data
 from Scripts.user import Item
 print("Importing Third-Party Modules...")
