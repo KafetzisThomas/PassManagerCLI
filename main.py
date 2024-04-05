@@ -27,13 +27,15 @@ version = "1.2.0"
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~#
 print("Importing Standard Libraries...")
 # Import standard libraries
-import os, sys, time, platform, getpass
+import os, sys, platform, getpass
+
 print("Importing Script Modules...")
 # Import module files
-
 from Scripts.utils import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data, update_data, delete_data, update_credentials_data
+from Scripts.database import insert_data_to_items, create_connection, print_data, update_items_data, delete_data, update_credentials_data
 from Scripts.user import Item
+from Scripts.login import sign_up, sign_in
+
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama, bcrypt
@@ -62,11 +64,9 @@ print(f"> Note that your typing is {F.LIGHTGREEN_EX}hidden{F.RESET}")
 #db.set_database()
 
 if not os.path.exists("vault.db"):
-    from Scripts.database import setup_login
-    setup_login()
+    sign_up(F)
 else:
-    from Scripts.database import sign_in
-    sign_in()
+    sign_in(F)
 
 def menu():
     print(f"> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
@@ -81,10 +81,9 @@ def menu():
         choice = input("\nChoice (1-4): ")
 
     except KeyboardInterrupt:
-        print(f"\nExiting in {F.LIGHTRED_EX}5{F.RESET} seconds...")
-        time.sleep(5)
+        print(f"\n{F.LIGHTRED_EX}Exiting...{F.RESET}")
         sys.exit()
-    
+
     if choice == "1":
         try:
             password = generate_password()
@@ -199,7 +198,7 @@ def menu():
                     # Ask user for new value
                     colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
 
-                    update_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue)
+                    update_items_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue)
 
                     #db.update_data()
                     print(f"{F.LIGHTRED_EX}Information Successfully updated.")
