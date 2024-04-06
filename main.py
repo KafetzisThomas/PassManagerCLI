@@ -61,7 +61,6 @@ print("\nFunction: Allows you to securely manage your saved passwords")
 print("                     of your online accounts.")
 print(f"\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation")
 print(f"> Note that your typing is {F.LIGHTGREEN_EX}hidden{F.RESET}")
-#db.set_database()
 
 if not os.path.exists("vault.db"):
     sign_up(F)

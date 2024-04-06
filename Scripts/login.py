@@ -1,10 +1,11 @@
 from Scripts.database import create_connection,create_credentials_table, create_items_table, insert_data_to_credentials, get_master_password
 from Scripts.user import User
 import getpass, bcrypt, sys
+from Scripts.utils import load_encryption_key
 
-conn, cur = create_connection()
 
 def sign_up(F):
+    conn, cur = create_connection()
     create_credentials_table(cur)
     create_items_table(cur)
 
@@ -23,6 +24,8 @@ def sign_up(F):
 
 
 def sign_in(F):
+    conn, cur = create_connection()
+    print(load_encryption_key(cur))
     try:
         master_username = input("\nMaster Username: ")
         master_password = getpass.getpass("Master Password: ").encode('utf-8')

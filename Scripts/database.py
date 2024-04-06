@@ -4,12 +4,12 @@ import sqlite3, sys, getpass, bcrypt
 from Scripts.user import User
 from cryptography.fernet import Fernet
 from prettytable import PrettyTable
-from Scripts.utils import encrypt, decrypt
+from Scripts.utils import generate_encryption_key, load_encryption_key, encrypt, decrypt
 
 #key = Fernet.generate_key()
 
 # ** this key is currently only for testing **
-encryption_key = "-n9ISIWpULnLIGwatu-BDrf_Ob1xfhsKOZ_rbRn2KXU="
+#encryption_key = "-n9ISIWpULnLIGwatu-BDrf_Ob1xfhsKOZ_rbRn2KXU="
 
 
 def create_connection():
@@ -35,11 +35,13 @@ def create_items_table(cur):
                 )""")
 
 def insert_data_to_credentials(conn, cur, user):
+    encryption_key = generate_encryption_key()
     with conn:
         cur.execute("INSERT INTO credentials VALUES (:master_username, :master_password, :encryption_key)", {'master_username': user.master_username, 'master_password': user.master_password, 'encryption_key': encryption_key})
 
 
 def insert_data_to_items(conn, cur, item):
+    encryption_key = load_encryption_key(cur)
     website = encrypt(item.website.encode(), encryption_key).decode('utf-8')
     username = encrypt(item.username.encode(), encryption_key).decode('utf-8')
     password = encrypt(item.password.encode(), encryption_key).decode('utf-8')
@@ -54,6 +56,7 @@ def get_master_password(cur, master_username):
 
 
 def print_data(cur):
+    encryption_key = load_encryption_key(cur)
     cur.execute("SELECT name, username, password, website, notes, date_posted FROM items")
     mytable = PrettyTable(["Name", "Username", "Password", "Website", "Notes", "Date Posted"])
 
