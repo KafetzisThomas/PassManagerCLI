@@ -1,4 +1,4 @@
-from Scripts.database import create_connection,create_credentials_table, create_items_table, insert_data_to_credentials, get_master_password
+from Scripts.database import create_connection,create_credentials_table, create_items_table, insert_data_to_credentials, get_master_password, update_credentials_data
 from Scripts.user import User
 import getpass, bcrypt, sys
 from Scripts.utils import load_encryption_key
@@ -42,3 +42,8 @@ def sign_in(F):
     except KeyboardInterrupt:
         print(f"\n{F.LIGHTRED_EX}Exiting...{F.RESET}")
         sys.exit()
+
+def change_master_password(conn, cur, old_master_username, master_username, master_password):
+    salt = bcrypt.gensalt()
+    hashed_password = bcrypt.hashpw(master_password, salt)
+    update_credentials_data(conn, cur, old_master_username, master_username, hashed_password)

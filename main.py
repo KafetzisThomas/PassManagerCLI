@@ -28,17 +28,18 @@ version = "1.2.0"
 print("Importing Standard Libraries...")
 # Import standard libraries
 import os, sys, platform, getpass
+from datetime import datetime
 
 print("Importing Script Modules...")
 # Import module files
 from Scripts.utils import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data, update_items_data, delete_data, update_credentials_data
+from Scripts.database import insert_data_to_items, create_connection, print_data, update_items_data, delete_data, get_master_password
 from Scripts.user import Item
-from Scripts.login import sign_up, sign_in
+from Scripts.login import sign_up, sign_in, change_master_password
 
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
-import colorama, bcrypt
+import colorama
 from colorama import Fore as F, Back as B
 colorama.init(autoreset=True)
 
@@ -75,7 +76,7 @@ def menu():
     print(f"--------------- {F.LIGHTYELLOW_EX}Other Options{F.RESET} ------------------------------")
     print(f"\t3. Check & Download Package {F.LIGHTGREEN_EX}Updates")
     print(f"\t4. {F.LIGHTCYAN_EX}Change{F.RESET} Master password")
-    
+
     try:
         choice = input("\nChoice (1-4): ")
 
@@ -95,29 +96,25 @@ def menu():
 
         def main():
             try:
-                # Get input from the user and store information inside the database table (vault)
                 name = input("\nName: ")
                 username = input("Username: ")
                 website = input("Website: ")
                 notes = input("\nNote: ")
 
                 if name and username and website != '':
-                    #db.insert_data(name, username, password, website, note)
                     conn, cur = create_connection()
-                    from datetime import datetime
                     item = Item(name=name, date_posted=datetime.now(), website=website, username=username, password=password, notes=notes)
                     insert_data_to_items(conn, cur, item)
-                    print(f"{F.LIGHTRED_EX}Information Saved Successfully into your Vault.\n")
+                    print(f"{F.LIGHTRED_EX}Information saved successfully into your vault.\n")
                 else:
                     print(f"{F.LIGHTRED_EX}You did not fill all the fields.")
                     main()
-            
+
             except KeyboardInterrupt:
                 print(f"\n{F.LIGHTRED_EX}Operation cancelled.\n")
                 menu()
 
         try:
-            # Print the generated password
             print(f"\nYour new password is: {B.LIGHTBLUE_EX}{F.WHITE} {password} ")
             print(f"\n> Type {F.LIGHTGREEN_EX}y{F.RESET} to save the above password. {B.LIGHTGREEN_EX}{F.BLACK} Highly Recommended! ")
             print(f"> Type {F.LIGHTRED_EX}n{F.RESET} to create a password by your own.")
@@ -151,10 +148,9 @@ def menu():
             menu()
 
     elif choice == "2":
-        #db.print_data()
         conn, cur = create_connection()
         print_data(cur)
-        
+
         def vault_options():
             print(f"\n\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
             print(f"--------------- {F.LIGHTYELLOW_EX}Vault Options{F.RESET} ------------------------------")
@@ -166,23 +162,16 @@ def menu():
                 choice = input("\nChoice (1-3): ")
                 
                 if choice == "1":
-                    #db.print_data()
                     print_data(cur)
                     vault_options()
                 elif choice == "2":
-                    #db.print_data()
                     print_data(cur)
-
                     # Ask user for which record (ID) of the row want data to be deleted
                     delete_record = input("\n\nWhich specific record (name) do you want to delete from the vault?\n> ")
-
                     delete_data(conn, cur, delete_record)
-
-                    #db.delete_data()
                     print(f"{F.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
                 elif choice == "3":
-                    #db.print_data()
                     print_data(cur)
                     
                     # Ask user for which record (name) of the row want data to be updated
@@ -198,8 +187,6 @@ def menu():
                     colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
 
                     update_items_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue)
-
-                    #db.update_data()
                     print(f"{F.LIGHTRED_EX}Information Successfully updated.")
                     vault_options()
                 else:
@@ -215,7 +202,7 @@ def menu():
             except KeyboardInterrupt:
                 print(f"\n{F.LIGHTRED_EX}Operation canceled.\n")
                 menu() 
-        
+
         vault_options()
 
     elif choice == "3":
@@ -224,21 +211,20 @@ def menu():
         os.system("pip install --upgrade -r requirements.txt")
         print("\nAll required packages are up to date.")
         input("Press Enter to get back to the Menu...")
-        
-        # Clear console
-        os.system(clear_command)
+
+        os.system(clear_command)  # Clear console
         menu()
 
     elif choice == "4":
-        #db.change_master_password()
         conn, cur = create_connection()
-        master_username = input("\nMaster Username: ")
-        master_password = getpass.getpass("\nMaster Password: ").encode('utf-8')
-        if master_username != '' and master_password != '':
-            salt = bcrypt.gensalt()
-            hashed_password = bcrypt.hashpw(master_password, salt)
-            update_credentials_data(conn, cur, hashed_password, master_username)
-
+        old_master_username = input("\nOld Master Username: ")
+        master_username = input("New Master Username: ")
+        master_password = getpass.getpass("New Master Password: ").encode('utf-8')
+        if get_master_password(cur, old_master_username) and master_username != '':
+            change_master_password(conn, cur, old_master_username, master_username, master_password)
+            print(f"{F.LIGHTRED_EX}Master username & password successfully updated.\n")
+        else:
+            print(f"{F.LIGHTRED_EX}Master username not found.\n")
         menu()
     else:
         print(f"{F.LIGHTRED_EX}Undefined choice.\n")

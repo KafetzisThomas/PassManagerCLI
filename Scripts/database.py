@@ -70,10 +70,11 @@ def print_data(cur):
     print(mytable)
 
 
-def update_credentials_data(conn, cur, colValue, update_record):
+def update_credentials_data(conn, cur, old_master_username, master_username, master_password):
     # Update data from db (table: credentials)
     with conn:
-        cur.execute(f"UPDATE credentials SET master_password = ? WHERE master_username = ?", (colValue, update_record))
+        cur.execute("""UPDATE credentials SET master_username = :master_username, master_password = :master_password WHERE master_username = :old_master_username""",
+                  {'old_master_username': old_master_username, 'master_username': master_username, 'master_password': master_password})
 
 
 def update_items_data(conn, cur, colName, colValue, update_record):
@@ -86,8 +87,6 @@ def delete_data(conn, cur, colName):
     # Delete data from db (table: items)
     with conn:
         cur.execute('DELETE FROM items WHERE name = ?', (colName,))
-
-
 
 
 
