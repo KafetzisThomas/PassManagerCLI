@@ -87,7 +87,16 @@ def menu():
 
     if choice == 1:
         try:
-            pwd_length = int(input("\nEnter password length: "))
+            length = int(input("\nEnter password length (8-16): "))
+            include_digits = input(f"Do you want to include digits? {Fore.GREEN}y{Fore.RESET}/{Fore.RED}n{Fore.RESET}: ")
+            include_special_chars = input(f"Do you want to include special chars? {Fore.GREEN}y{Fore.RESET}/{Fore.RED}n{Fore.RESET}: ")
+            if not (length >= 8 and length <= 16):
+                print(f"{Fore.LIGHTRED_EX}Password length is not within the specified limits.\n")
+                menu()
+            if include_digits.lower() == "n":
+                include_digits = False
+            if include_special_chars.lower() == "n":
+                include_special_chars = False
         except ValueError as err:
             print(f"{Fore.LIGHTRED_EX}{err}\n")
             menu()
@@ -95,7 +104,7 @@ def menu():
             print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
             menu()
         finally:
-            password = generate_password(pwd_length)
+            password = generate_password(length, include_digits=include_digits, include_special_chars=include_special_chars, include_letters=True)
 
         def main():
             try:

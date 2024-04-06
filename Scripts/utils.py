@@ -22,11 +22,20 @@ def decrypt(token, key):
     return Fernet(key).decrypt(token)
 
 
-def generate_password(pwd_length, password = ''):
+def generate_password(length, include_letters, include_digits, include_special_chars):
     """Return a generated password string"""
     letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
-    alphabet = letters + digits + special_chars
 
-    for _ in range(pwd_length):
+    selected_chars = []
+    if include_letters:
+        selected_chars.append(letters)
+    if include_digits:
+        selected_chars.append(digits)
+    if include_special_chars:
+        selected_chars.append(special_chars)
+    alphabet = ''.join(selected_chars)
+
+    password = ''
+    for _ in range(length):
         password += ''.join(secrets.choice(alphabet))
     return password
