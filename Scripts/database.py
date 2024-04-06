@@ -1,30 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: UTF-8 -*-
-import sqlite3, sys, getpass, bcrypt
-from Scripts.user import User
-from cryptography.fernet import Fernet
+import sqlite3
 from prettytable import PrettyTable
 from Scripts.utils import generate_encryption_key, load_encryption_key, encrypt, decrypt
-
-#key = Fernet.generate_key()
-
-# ** this key is currently only for testing **
-#encryption_key = "-n9ISIWpULnLIGwatu-BDrf_Ob1xfhsKOZ_rbRn2KXU="
 
 
 def create_connection():
     conn = sqlite3.connect("vault.db")
     cur = conn.cursor()
-    return conn, cur
 
-def create_credentials_table(cur):
-    cur.execute("""CREATE TABLE credentials (
+    cur.execute("""CREATE TABLE IF NOT EXISTS credentials (
                 master_username text,
                 master_password text,
                 encryption_key text
                 )""")
 
-def create_items_table(cur):
     cur.execute("""CREATE TABLE IF NOT EXISTS items (
                 name text,
                 date_posted text,
@@ -33,6 +23,9 @@ def create_items_table(cur):
                 password text,
                 notes text
                 )""")
+    
+    return conn, cur
+
 
 def insert_data_to_credentials(conn, cur, user):
     encryption_key = generate_encryption_key()
@@ -87,7 +80,6 @@ def delete_data(conn, cur, colName):
     # Delete data from db (table: items)
     with conn:
         cur.execute('DELETE FROM items WHERE name = ?', (colName,))
-
 
 
 def close_connection(conn):

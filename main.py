@@ -40,7 +40,7 @@ from Scripts.login import sign_up, sign_in, change_master_password
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama
-from colorama import Fore as F, Back as B
+from colorama import Fore, Back
 colorama.init(autoreset=True)
 
 # Run check on python version, must be 3.6 or higher because of f strings
@@ -55,43 +55,45 @@ os.system(clear_command)  # Clear console
 
 ############################################## MAIN ##############################################
 
-print(f"\n{F.LIGHTYELLOW_EX}======================= PassManagerCLI v{version} =======================")
+print(f"\n{Fore.LIGHTYELLOW_EX}======================= PassManagerCLI v{version} =======================")
 print("========= https://github.com/KafetzisThomas/PassManagerCLI ==========")
 print("===================== Author: KafetzisThomas ======================")
 print("\nFunction: Allows you to securely manage your saved passwords")
 print("                     of your online accounts.")
-print(f"\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation")
-print(f"> Note that your typing is {F.LIGHTGREEN_EX}hidden{F.RESET}")
+print(f"\n> Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}quit/cancel operation")
+print(f"> Note that your typing is {Fore.LIGHTGREEN_EX}hidden{Fore.RESET}")
 
 if not os.path.exists("vault.db"):
-    sign_up(F)
+    conn, cur = create_connection()
+    sign_up(conn, cur, Fore)
 else:
-    sign_in(F)
+    conn, cur = create_connection()
+    sign_in(cur, Fore)
 
 def menu():
-    print(f"> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
-    print(f"--------------- {F.LIGHTYELLOW_EX}Menu Options{F.RESET} -------------------------------")
-    print(f"\t1. Add Item - {F.LIGHTBLUE_EX}Generate/Save{F.RESET} passwords")
-    print(f"\t2. View {F.LIGHTMAGENTA_EX}Vault{F.RESET} - See your {F.LIGHTRED_EX}saved passwords{F.RESET}")
-    print(f"--------------- {F.LIGHTYELLOW_EX}Other Options{F.RESET} ------------------------------")
-    print(f"\t3. Check & Download Package {F.LIGHTGREEN_EX}Updates")
-    print(f"\t4. {F.LIGHTCYAN_EX}Change{F.RESET} Master password")
+    print(f"> Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}quit/cancel operation\n")
+    print(f"--------------- {Fore.LIGHTYELLOW_EX}Menu Options{Fore.RESET} -------------------------------")
+    print(f"\t1. Add Item - {Fore.LIGHTBLUE_EX}Generate/Save{Fore.RESET} passwords")
+    print(f"\t2. View {Fore.LIGHTMAGENTA_EX}Vault{Fore.RESET} - See your {Fore.LIGHTRED_EX}saved passwords{Fore.RESET}")
+    print(f"--------------- {Fore.LIGHTYELLOW_EX}Other Options{Fore.RESET} ------------------------------")
+    print(f"\t3. Check & Download Package {Fore.LIGHTGREEN_EX}Updates")
+    print(f"\t4. {Fore.LIGHTCYAN_EX}Change{Fore.RESET} Master password")
 
     try:
-        choice = input("\nChoice (1-4): ")
+        choice = int(input("\nChoice (1-4): "))
 
     except KeyboardInterrupt:
-        print(f"\n{F.LIGHTRED_EX}Exiting...{F.RESET}")
+        print(f"\n{Fore.LIGHTRED_EX}Exiting...{Fore.RESET}")
         sys.exit()
 
-    if choice == "1":
+    if choice == 1:
         try:
             password = generate_password()
         except ValueError as err:
-            print(f"{F.LIGHTRED_EX}{err}\n")
+            print(f"{Fore.LIGHTRED_EX}{err}\n")
             menu()
         except KeyboardInterrupt:
-            print(f"\n{F.LIGHTRED_EX}Operation cancelled.\n")
+            print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
             menu()
 
         def main():
@@ -102,26 +104,25 @@ def menu():
                 notes = input("\nNote: ")
 
                 if name and username and website != '':
-                    conn, cur = create_connection()
                     item = Item(name=name, date_posted=datetime.now(), website=website, username=username, password=password, notes=notes)
                     insert_data_to_items(conn, cur, item)
-                    print(f"{F.LIGHTRED_EX}Information saved successfully into your vault.\n")
+                    print(f"{Fore.LIGHTRED_EX}Information saved successfully into your vault.\n")
                 else:
-                    print(f"{F.LIGHTRED_EX}You did not fill all the fields.")
+                    print(f"{Fore.LIGHTRED_EX}You did not fill all the fields.")
                     main()
 
             except KeyboardInterrupt:
-                print(f"\n{F.LIGHTRED_EX}Operation cancelled.\n")
+                print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
                 menu()
 
         try:
-            print(f"\nYour new password is: {B.LIGHTBLUE_EX}{F.WHITE} {password} ")
-            print(f"\n> Type {F.LIGHTGREEN_EX}y{F.RESET} to save the above password. {B.LIGHTGREEN_EX}{F.BLACK} Highly Recommended! ")
-            print(f"> Type {F.LIGHTRED_EX}n{F.RESET} to create a password by your own.")
-            print(f"\n*Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}cancel{F.RESET} this operation.\n")
+            print(f"\nYour new password is: {Back.LIGHTBLUE_EX}{Fore.WHITE} {password} ")
+            print(f"\n> Type {Fore.LIGHTGREEN_EX}y{Fore.RESET} to save the above password. {Back.LIGHTGREEN_EX}{Fore.BLACK} Highly Recommended! ")
+            print(f"> Type {Fore.LIGHTRED_EX}n{Fore.RESET} to create a password by your own.")
+            print(f"\n*Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}cancel{Fore.RESET} this operation.\n")
 
             # Option for saving the generated password
-            save = input(f"Do you want to save that password? {F.GREEN}y{F.RESET}/{F.RED}n{F.RESET}: ")
+            save = input(f"Do you want to save that password? {Fore.GREEN}y{Fore.RESET}/{Fore.RED}n{Fore.RESET}: ")
 
             # Save the generated password if user filled the required fields
             if save.lower() == "y":
@@ -129,83 +130,82 @@ def menu():
                 menu()
             elif save.lower() == "n":
                 # Let user create a password by his own
-                print(f"> Use 8 or more characters with a mix of {F.LIGHTGREEN_EX}letters{F.RESET}, {F.LIGHTGREEN_EX}numbers{F.RESET} & {F.LIGHTGREEN_EX}symbols{F.RESET}.\n")                
+                print(f"> Use 8 or more characters with a mix of {Fore.LIGHTGREEN_EX}letters{Fore.RESET}, {Fore.LIGHTGREEN_EX}numbers{Fore.RESET} & {Fore.LIGHTGREEN_EX}symbols{Fore.RESET}.\n")                
                 password = input("Password: ")
                 
                 if password != '':
                     main()
                     menu()
                 else:
-                    print(f"{F.LIGHTRED_EX}You did not fill all the fields.\n")
+                    print(f"{Fore.LIGHTRED_EX}You did not fill all the fields.\n")
                     menu()
 
             else:
-                print(f"{F.LIGHTRED_EX}Undefined choice.\n")
+                print(f"{Fore.LIGHTRED_EX}Undefined choice.\n")
                 menu()
 
         except KeyboardInterrupt:
-            print(f"\n{F.LIGHTRED_EX}Operation cancelled.\n")
+            print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
             menu()
 
-    elif choice == "2":
-        conn, cur = create_connection()
+    elif choice == 2:
         print_data(cur)
 
         def vault_options():
-            print(f"\n\n> Enter {F.LIGHTBLUE_EX}Ctrl+C{F.RESET} to {F.LIGHTRED_EX}quit/cancel operation\n")
-            print(f"--------------- {F.LIGHTYELLOW_EX}Vault Options{F.RESET} ------------------------------")
-            print(f"\t1. Refresh {F.LIGHTBLUE_EX}Vault{F.RESET}")
-            print(f"\t2. {F.LIGHTRED_EX}Delete{F.RESET} a record")
-            print(f"\t3. Update {F.LIGHTRED_EX}record{F.RESET} info")
+            print(f"\n\n> Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}quit/cancel operation\n")
+            print(f"--------------- {Fore.LIGHTYELLOW_EX}Vault Options{Fore.RESET} ------------------------------")
+            print(f"\t1. Refresh {Fore.LIGHTBLUE_EX}Vault{Fore.RESET}")
+            print(f"\t2. {Fore.LIGHTRED_EX}Delete{Fore.RESET} a record")
+            print(f"\t3. Update {Fore.LIGHTRED_EX}record{Fore.RESET} info")
             
             try:
-                choice = input("\nChoice (1-3): ")
+                choice = int(input("\nChoice (1-3): "))
                 
-                if choice == "1":
+                if choice == 1:
                     print_data(cur)
                     vault_options()
-                elif choice == "2":
+                elif choice == 2:
                     print_data(cur)
                     # Ask user for which record (ID) of the row want data to be deleted
                     delete_record = input("\n\nWhich specific record (name) do you want to delete from the vault?\n> ")
                     delete_data(conn, cur, delete_record)
-                    print(f"{F.LIGHTRED_EX}Record ID Successfully deleted.")
+                    print(f"{Fore.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
-                elif choice == "3":
+                elif choice == 3:
                     print_data(cur)
                     
                     # Ask user for which record (name) of the row want data to be updated
-                    update_record = input(f"\n\nWhich specific {F.LIGHTRED_EX}record (name){F.RESET}"
-                                            f" do you want to {F.LIGHTBLUE_EX}update{F.RESET} from the vault?\n> ")
+                    update_record = input(f"\n\nWhich specific {Fore.LIGHTRED_EX}record (name){Fore.RESET}"
+                                            f" do you want to {Fore.LIGHTBLUE_EX}update{Fore.RESET} from the vault?\n> ")
                     
                     # Ask user for name of the column to change value in row
-                    colName = input(f"\nWhich specific {F.LIGHTCYAN_EX}column name{F.RESET}"
-                                        f" do you want to update from the {F.LIGHTMAGENTA_EX}vault{F.RESET}?"
+                    colName = input(f"\nWhich specific {Fore.LIGHTCYAN_EX}column name{Fore.RESET}"
+                                        f" do you want to update from the {Fore.LIGHTMAGENTA_EX}vault{Fore.RESET}?"
                                             "\n\t(name, username, password, website, notes)\n> ").lower()
                     
                     # Ask user for new value
-                    colValue = input(f"\nWrite {F.LIGHTBLUE_EX}new{F.RESET} item:\n> ").strip()
+                    colValue = input(f"\nWrite {Fore.LIGHTBLUE_EX}new{Fore.RESET} item:\n> ").strip()
 
                     update_items_data(conn=conn, cur=cur, update_record=update_record, colName=colName, colValue=colValue)
-                    print(f"{F.LIGHTRED_EX}Information Successfully updated.")
+                    print(f"{Fore.LIGHTRED_EX}Information Successfully updated.")
                     vault_options()
                 else:
-                    print(f"{F.LIGHTRED_EX}Undefined choice.")
+                    print(f"{Fore.LIGHTRED_EX}Undefined choice.")
                     vault_options()
             
             except ValueError as err:
-                print(f"{F.LIGHTRED_EX}{err}")
+                print(f"{Fore.LIGHTRED_EX}{err}")
                 vault_options()
             except RuntimeError as err:
-                print(f"{F.LIGHTRED_EX}Record ID not found.")
+                print(f"{Fore.LIGHTRED_EX}Record ID not found.")
                 vault_options()
             except KeyboardInterrupt:
-                print(f"\n{F.LIGHTRED_EX}Operation canceled.\n")
+                print(f"\n{Fore.LIGHTRED_EX}Operation canceled.\n")
                 menu() 
 
         vault_options()
 
-    elif choice == "3":
+    elif choice == 3:
         # Update required packages to the latest versions if exist
         print("\nChecking for available package updates...")
         os.system("pip install --upgrade -r requirements.txt")
@@ -215,19 +215,18 @@ def menu():
         os.system(clear_command)  # Clear console
         menu()
 
-    elif choice == "4":
-        conn, cur = create_connection()
+    elif choice == 4:
         old_master_username = input("\nOld Master Username: ")
         master_username = input("New Master Username: ")
         master_password = getpass.getpass("New Master Password: ").encode('utf-8')
         if get_master_password(cur, old_master_username) and master_username != '':
             change_master_password(conn, cur, old_master_username, master_username, master_password)
-            print(f"{F.LIGHTRED_EX}Master username & password successfully updated.\n")
+            print(f"{Fore.LIGHTRED_EX}Master username & password successfully updated.\n")
         else:
-            print(f"{F.LIGHTRED_EX}Master username not found.\n")
+            print(f"{Fore.LIGHTRED_EX}Master username not found.\n")
         menu()
     else:
-        print(f"{F.LIGHTRED_EX}Undefined choice.\n")
+        print(f"{Fore.LIGHTRED_EX}Undefined choice.\n")
         menu()
 
 menu()
