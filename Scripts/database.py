@@ -43,12 +43,12 @@ def insert_data_to_items(conn, cur, item):
         cur.execute("INSERT INTO items VALUES (:name, :date_posted, :website, :username, :password, :notes)", {'name': item.name, 'date_posted': item.date_posted, 'website': website, 'username': username, 'password': password, 'notes': notes})
 
 
-def get_master_password(cur, master_username):
+def get_current_master_password(cur, master_username):
     cur.execute("SELECT * FROM credentials WHERE master_username=:master_username", {'master_username': master_username})
     return cur.fetchone()
 
 
-def print_data(cur):
+def print_items_data(cur):
     encryption_key = load_encryption_key(cur)
     cur.execute("SELECT name, username, password, website, notes, date_posted FROM items")
     mytable = PrettyTable(["Name", "Username", "Password", "Website", "Notes", "Date Posted"])
@@ -72,8 +72,10 @@ def update_credentials_data(conn, cur, old_master_username, master_username, mas
 
 def update_items_data(conn, cur, colName, colValue, update_record):
     # Update data from db (table: items)
+    encryption_key = load_encryption_key(cur)
+    encrypted_colValue = encrypt(colValue.encode(), encryption_key).decode('utf-8')
     with conn:
-        cur.execute(f"UPDATE items SET {colName} = ? WHERE name = ?", (colValue, update_record))
+        cur.execute(f"UPDATE items SET {colName} = ? WHERE name = ?", (encrypted_colValue, update_record))
 
 
 def delete_data(conn, cur, colName):

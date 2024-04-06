@@ -32,10 +32,10 @@ from datetime import datetime
 
 print("Importing Script Modules...")
 # Import module files
-from Scripts.utils import generate_password
-from Scripts.database import insert_data_to_items, create_connection, print_data, update_items_data, delete_data, get_master_password
-from Scripts.user import Item
+from Scripts.database import insert_data_to_items, create_connection, print_items_data, update_items_data, delete_data, get_current_master_password
 from Scripts.login import sign_up, sign_in, change_master_password
+from Scripts.utils import generate_password
+from Scripts.user import Item
 
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
@@ -81,20 +81,21 @@ def menu():
 
     try:
         choice = int(input("\nChoice (1-4): "))
-
     except KeyboardInterrupt:
         print(f"\n{Fore.LIGHTRED_EX}Exiting...{Fore.RESET}")
         sys.exit()
 
     if choice == 1:
         try:
-            password = generate_password()
+            pwd_length = int(input("\nEnter password length: "))
         except ValueError as err:
             print(f"{Fore.LIGHTRED_EX}{err}\n")
             menu()
         except KeyboardInterrupt:
             print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
             menu()
+        finally:
+            password = generate_password(pwd_length)
 
         def main():
             try:
@@ -110,7 +111,6 @@ def menu():
                 else:
                     print(f"{Fore.LIGHTRED_EX}You did not fill all the fields.")
                     main()
-
             except KeyboardInterrupt:
                 print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
                 menu()
@@ -119,61 +119,52 @@ def menu():
             print(f"\nYour new password is: {Back.LIGHTBLUE_EX}{Fore.WHITE} {password} ")
             print(f"\n> Type {Fore.LIGHTGREEN_EX}y{Fore.RESET} to save the above password. {Back.LIGHTGREEN_EX}{Fore.BLACK} Highly Recommended! ")
             print(f"> Type {Fore.LIGHTRED_EX}n{Fore.RESET} to create a password by your own.")
-            print(f"\n*Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}cancel{Fore.RESET} this operation.\n")
+            print(f"> Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}cancel{Fore.RESET} this operation.")
 
-            # Option for saving the generated password
-            save = input(f"Do you want to save that password? {Fore.GREEN}y{Fore.RESET}/{Fore.RED}n{Fore.RESET}: ")
-
-            # Save the generated password if user filled the required fields
+            save = input(f"\nDo you want to save that password? {Fore.GREEN}y{Fore.RESET}/{Fore.RED}n{Fore.RESET}: ")
             if save.lower() == "y":
                 main()
                 menu()
             elif save.lower() == "n":
-                # Let user create a password by his own
                 print(f"> Use 8 or more characters with a mix of {Fore.LIGHTGREEN_EX}letters{Fore.RESET}, {Fore.LIGHTGREEN_EX}numbers{Fore.RESET} & {Fore.LIGHTGREEN_EX}symbols{Fore.RESET}.\n")                
-                password = input("Password: ")
-                
+                password = input("Password: ")       
                 if password != '':
                     main()
                     menu()
                 else:
                     print(f"{Fore.LIGHTRED_EX}You did not fill all the fields.\n")
                     menu()
-
             else:
                 print(f"{Fore.LIGHTRED_EX}Undefined choice.\n")
                 menu()
-
         except KeyboardInterrupt:
             print(f"\n{Fore.LIGHTRED_EX}Operation cancelled.\n")
             menu()
 
     elif choice == 2:
-        print_data(cur)
-
+        print_items_data(cur)
         def vault_options():
             print(f"\n\n> Enter {Fore.LIGHTBLUE_EX}Ctrl+C{Fore.RESET} to {Fore.LIGHTRED_EX}quit/cancel operation\n")
             print(f"--------------- {Fore.LIGHTYELLOW_EX}Vault Options{Fore.RESET} ------------------------------")
             print(f"\t1. Refresh {Fore.LIGHTBLUE_EX}Vault{Fore.RESET}")
             print(f"\t2. {Fore.LIGHTRED_EX}Delete{Fore.RESET} a record")
             print(f"\t3. Update {Fore.LIGHTRED_EX}record{Fore.RESET} info")
-            
+
             try:
                 choice = int(input("\nChoice (1-3): "))
-                
                 if choice == 1:
-                    print_data(cur)
+                    print_items_data(cur)
                     vault_options()
                 elif choice == 2:
-                    print_data(cur)
+                    print_items_data(cur)
                     # Ask user for which record (ID) of the row want data to be deleted
                     delete_record = input("\n\nWhich specific record (name) do you want to delete from the vault?\n> ")
                     delete_data(conn, cur, delete_record)
                     print(f"{Fore.LIGHTRED_EX}Record ID Successfully deleted.")
                     vault_options()
                 elif choice == 3:
-                    print_data(cur)
-                    
+                    print_items_data(cur)
+
                     # Ask user for which record (name) of the row want data to be updated
                     update_record = input(f"\n\nWhich specific {Fore.LIGHTRED_EX}record (name){Fore.RESET}"
                                             f" do you want to {Fore.LIGHTBLUE_EX}update{Fore.RESET} from the vault?\n> ")
@@ -192,7 +183,6 @@ def menu():
                 else:
                     print(f"{Fore.LIGHTRED_EX}Undefined choice.")
                     vault_options()
-            
             except ValueError as err:
                 print(f"{Fore.LIGHTRED_EX}{err}")
                 vault_options()
@@ -202,7 +192,6 @@ def menu():
             except KeyboardInterrupt:
                 print(f"\n{Fore.LIGHTRED_EX}Operation canceled.\n")
                 menu() 
-
         vault_options()
 
     elif choice == 3:
@@ -211,7 +200,6 @@ def menu():
         os.system("pip install --upgrade -r requirements.txt")
         print("\nAll required packages are up to date.")
         input("Press Enter to get back to the Menu...")
-
         os.system(clear_command)  # Clear console
         menu()
 
@@ -219,14 +207,14 @@ def menu():
         old_master_username = input("\nOld Master Username: ")
         master_username = input("New Master Username: ")
         master_password = getpass.getpass("New Master Password: ").encode('utf-8')
-        if get_master_password(cur, old_master_username) and master_username != '':
+        if get_current_master_password(cur, old_master_username) and master_username != '':
             change_master_password(conn, cur, old_master_username, master_username, master_password)
             print(f"{Fore.LIGHTRED_EX}Master username & password successfully updated.\n")
         else:
             print(f"{Fore.LIGHTRED_EX}Master username not found.\n")
         menu()
+
     else:
         print(f"{Fore.LIGHTRED_EX}Undefined choice.\n")
         menu()
-
 menu()

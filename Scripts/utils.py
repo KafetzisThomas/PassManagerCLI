@@ -22,14 +22,11 @@ def decrypt(token, key):
     return Fernet(key).decrypt(token)
 
 
-def generate_password():
-  '''Generate a secure password'''
-  letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
-  alphabet = (letters + digits + special_chars)  # Define the alphabet
+def generate_password(pwd_length, password = ''):
+    """Return a generated password string"""
+    letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
+    alphabet = letters + digits + special_chars
 
-  pwd_length = int(input("\nEnter password length: "))  # Set password length
-
-  password = ''
-  for _ in range(pwd_length):
-    password += ''.join(secrets.choice(alphabet))  # Generate a password string
-  return password
+    for _ in range(pwd_length):
+        password += ''.join(secrets.choice(alphabet))
+    return password
