@@ -1,3 +1,4 @@
-cryptography>=37.0.2
-pysqlitecipher==0.22
+bcrypt>=4.1.2
+cryptography>=42.0.5
+prettytable==3.10.0
 colorama==0.4.4
