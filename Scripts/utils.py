@@ -5,26 +5,28 @@ from cryptography.fernet import Fernet
 
 
 def generate_encryption_key():
+    """Return a new encryption key"""
     key = Fernet.generate_key()
     return key
 
 
-def load_encryption_key(cur):
-    cur.execute("SELECT encryption_key FROM credentials")
-    return cur.fetchone()[0]
-
-
 def encrypt(message, key):
+    """Return an encrypted message (symmetric encryption)"""
     return Fernet(key).encrypt(message)
 
 
-def decrypt(token, key):
-    return Fernet(key).decrypt(token)
+def decrypt(message, key):
+    """Return a decrypted message (symmetric encryption)"""
+    return Fernet(key).decrypt(message)
 
 
 def generate_password(length, include_letters, include_digits, include_special_chars):
-    """Return a generated password string"""
-    letters, digits, special_chars = string.ascii_letters, string.digits, string.punctuation
+    """Return a random password string based on the provided options"""
+    letters, digits, special_chars = (
+        string.ascii_letters,
+        string.digits,
+        string.punctuation,
+    )
 
     selected_chars = []
     if include_letters:
@@ -33,9 +35,9 @@ def generate_password(length, include_letters, include_digits, include_special_c
         selected_chars.append(digits)
     if include_special_chars:
         selected_chars.append(special_chars)
-    alphabet = ''.join(selected_chars)
+    alphabet = "".join(selected_chars)
 
-    password = ''
+    password = ""
     for _ in range(length):
-        password += ''.join(secrets.choice(alphabet))
+        password += "".join(secrets.choice(alphabet))
     return password
