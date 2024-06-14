@@ -43,13 +43,13 @@ from Scripts.database import (
     close_connection,
 )
 from Scripts.login import sign_up, sign_in, change_master_password
-from Scripts.utils import generate_password
 from Scripts.models import Item
 
 print("Importing Third-Party Modules...")
 # Import other (third-party) libraries
 import colorama
 from colorama import Fore, Back
+from pass_generator.pass_generator import generate_password
 
 colorama.init(autoreset=True)
 
